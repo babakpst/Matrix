@@ -28,11 +28,14 @@ class Mass_Matrix_Class:
         import numpy as np
 
         # Import user-defined modules ==============================================================
+        import Parameters_Class
 
         # Define arrays ============================================================================
 
 
         # Code =====================================================================================
+        Parameters = Parameters_Class.Parameters_Class()
+
 
         # Integrate over integration points
         for LY in range(NInt):
