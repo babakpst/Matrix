@@ -1,0 +1,8 @@
+Input file name:
+Ex_1.txt
+
+Input directory: (These directions are for the Linux machine)
+/h1/babak/Documents/Git/Mass_Matrix/input
+
+Output directory:
+/h1/babak/Documents/Git/Mass_Matrix/output
