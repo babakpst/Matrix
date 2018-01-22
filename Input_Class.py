@@ -1,4 +1,5 @@
 
+
 #####################################################################
 # Code developed by: Dr. Babak Poursartip
 # Supervised by:     Dr. Clint Dawson
@@ -12,10 +13,7 @@
 #
 #####################################################################
 
-class Mass_Matrix_Class:
+class Input_Class:
 
-    def __int__(self)
+        def __int__(self)
         pass
-
-    def Mass_2D_4N(self)
-        
