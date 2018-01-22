@@ -21,7 +21,7 @@ class Input_Class:
     def Read_Data(self):
         import os
         import shutil
-        
+
         # Input data ==========================================================
         # Read the name of the input file from address file
         print(" ============== Input Class ==============")
@@ -65,7 +65,23 @@ class Input_Class:
 
     def Read_Input(self):
 
-        import numpy as np
+       import numpy as np
+
+        print(" Opening the input file ...")
+        File_Input = open(self.InputFileName,"r")
+        print()
+
+        # -- Opens and Reads data from the input file
+        Temp = File_Input.readline().rstrip("\n")
+        Temp = File_Input.readline().rstrip("\n")
+        Temp = File_Input.readline().rstrip("\n")
+        Temp = File_Input.readline().rstrip("\n")
+        self.Total_Time = float(Temp)  # Total simulation time
+        print("{:40} {:f}".format(" The total simulation time is:", self.Total_Time))
+
+
+
+
 
         
         

@@ -24,7 +24,7 @@ def main(arg):
     import time  # time.sleep(2)
     from datetime import datetime 
 
-    # Import modules ===============================================================================
+    # Import user-defined modules ==================================================================
     import Input_Class
 
 
@@ -36,7 +36,8 @@ def main(arg):
     print("{:^80}".format(" Simulation starts ..."))
     print()
 
-    #Results = Solver_Class.Solver()
+    Input = Input_Class.Input_Class()
+    Input.Read_Data()
 
     print("{:80}".format("---------- Simulation was conducted successfully ----------"))
     print()
