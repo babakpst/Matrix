@@ -37,6 +37,7 @@ def main(arg):
     print()
 
     Results = Compute_Class.Compute_Class()
+    Results.Compute_Matrices()
 
     print("{:80}".format("---------- Simulation was conducted successfully ----------"))
     print()

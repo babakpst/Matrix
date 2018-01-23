@@ -14,7 +14,7 @@
 
 class Mass_Matrix_Class:
 
-    def __int__(self)
+    def __int__(self):
         pass
 
     def Mass_2D_4N(self,
@@ -28,19 +28,18 @@ class Mass_Matrix_Class:
         import numpy as np
 
         # Import user-defined modules ==============================================================
-        import Parameters_Class
+
 
         # Define arrays ============================================================================
 
 
         # Code =====================================================================================
-        Parameters = Parameters_Class.Parameters_Class()
+        
 
 
         # Integrate over integration points
         for LY in range(NInt):
 
-        DO LY = 1, NInt ;
             SF%X2  = GAUSS_PNT%XINT ( LY ) ;
             WY     = GAUSS_PNT%WINT ( LY ) ;
 
@@ -124,3 +123,9 @@ Real (Kind=DBL)      :: Phi_Phi_T ( NNode, NNode ), PhiX_PhiX_T ( NNode, NNode )
 ! - Type DECLERATIONS -------------------------------------------------------------------------------------------------------------------------------
 Type (  SF_2_4 ) ::  SF ;  ! SHAPE FUNCTION
 Type ( DSF_2_4 ) :: DSF ;  ! DIFFERENTIALS OF SHAPE FUNCTION
+
+
+
+
+    def Mass_2D_3N(self):
+        pass

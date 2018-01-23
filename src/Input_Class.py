@@ -81,9 +81,21 @@ class Input_Class:
         self.Total_Time = float(Temp)  # Total simulation time
         print("{:40} {:f}".format(" The total simulation time is:", self.Total_Time))
 
+        NNode
+        NDim
+        NPoints 
+        NEl
+        NInt
+        Rho
+        El_Type 1 for quad, 2 for triangle
+        NDOF # Number of Degree of Freedom
+
+
 
 
     def Read_Arrays(self):
-        
+        XYZ
+        Connectivity
+        Constraints
         
         
