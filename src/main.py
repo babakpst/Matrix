@@ -25,7 +25,7 @@ def main(arg):
     from datetime import datetime 
 
     # Import user-defined modules ==================================================================
-    import Input_Class
+    import Compute_Class
 
 
     # Code begins =====================================================================================
@@ -36,8 +36,7 @@ def main(arg):
     print("{:^80}".format(" Simulation starts ..."))
     print()
 
-    Input = Input_Class.Input_Class()
-    Input.Read_Data()
+    Results = Compute_Class.Compute_Class()
 
     print("{:80}".format("---------- Simulation was conducted successfully ----------"))
     print()

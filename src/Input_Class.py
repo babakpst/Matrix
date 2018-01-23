@@ -63,6 +63,8 @@ class Input_Class:
         del File
         del Input_Dir
 
+
+####################################################################################################
     def Read_Input(self):
 
        import numpy as np
@@ -81,7 +83,7 @@ class Input_Class:
 
 
 
-
-
+    def Read_Arrays(self):
+        
         
         
