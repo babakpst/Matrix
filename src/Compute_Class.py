@@ -39,14 +39,13 @@ class Compute_Class:
 
 
         # Define Arrays ============================================================================
-        XYZ       = np.zeros(Input.NPoint, Input.NDim, dtype=np.float64)  # Elemental Equations
-        Connectivity= np.zeros(Input.NEl, Input.NNode, dtype=np.float64)  # Elemental Equations
-        ID        = np.zeros(Input.NPoints, Input.NDOF, dtype=np.float64)      # Elemental Equations
+        self.XYZ       = np.zeros(Input.NPoint, Input.NDim, dtype=np.float64)  # Elemental Equations
+        self.Conn      = np.zeros(Input.NEl, Input.NNode, dtype=np.float64)  # Elemental Equations
+        self.ID        = np.zeros(Input.NPoints, Input.NDOF, dtype=np.float64)      # Elemental Equations
 
-        Me        = np.zeros(NEqEl, NEqEl, dtype=np.float64)  # Elemental Equations
-        M_Global  = np.zeros(NEq, NEq, dtype=np.float64)      # Elemental Equations
-
-        ND        = np.zeros(NEq, NEq, dtype=np.float64)      # Elemental Equations
+        self.Me        = np.zeros(NEqEl, NEqEl, dtype=np.float64)  # Elemental Equations
+        self.M_Global  = np.zeros(NEq, NEq, dtype=np.float64)      # Elemental Equations
+        self.ND        = np.zeros(NEq, NEq, dtype=np.float64)      # Elemental Equations
 
         # Read arrays from input file ==============================================================
         Input.Read_Arrays()
@@ -69,4 +68,5 @@ class Compute_Class:
 
         # print results
 
-    def Assemble (self)
+    def Assemble (self):
+        pass
