@@ -2,8 +2,10 @@
 !
 4          ! NEl: Total Number of Elements
 4          ! El_Type
-1          ! NInt_Type
+1          ! NInt_Type 1: for quad - 2: for triangle
 1          ! NInt
 2          ! NDim
 4          ! NNode
 8          ! Total number of nodes
+1.0        ! Density
+2          ! Degrees of freedom of each node

@@ -85,50 +85,50 @@ class Input_Class:
         # -- Opens and Reads data from the input file
         Temp = File_Input.readline().rstrip("\n")
         Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        self.Total_Time = float(Temp)  # Total simulation time
-        #print("{:40} {:f}".format(" The total simulation time is:", self.Total_Time))
 
         Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        self.El_Type = float(Temp) # 1 for quad, 2 for triangle
+        Temp = Temp.split()
+        self.NEl = float(Temp[0])
+        print("{:40} {:f}".format(" The total number of elements is\are:", self.NEl))
 
         Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        self.NNode = float(Temp)
+        Temp = Temp.split()
+        self.El_Type = float(Temp[0])
+        print("{:40} {:f}".format(" The element type is:", self.El_Type))
 
         Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        self.NDim = float(Temp)
+        Temp = Temp.split()
+        self.NInt_Type = float(Temp[0])
+        print("{:40} {:f}".format(" The integration point type is:", self.NInt_Type))
 
         Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        self.NInt = float(Temp)
+        Temp = Temp.split()
+        self.NInt = float(Temp[0])
+        print("{:40} {:f}".format(" The integration point type is:", self.NInt))
 
         Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rsself.trip("\n")
-        self.Rho = float(Temp)
+        Temp = Temp.split()
+        self.NDim = float(Temp[0])
+        print("{:40} {:f}".format(" The dimension of space is:", self.NDim))
 
         Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        self.NPoints = float(Temp)
+        Temp = Temp.split()
+        self.NNode = float(Temp[0])
+        print("{:40} {:f}".format(" The Number of Nodes of each element is:", self.NNode))
 
         Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        self.NEl = float(Temp)
+        Temp = Temp.split()
+        self.NPoints = float(Temp[0])
+        print("{:40} {:f}".format(" The Number of Points in the model:", self.NPoints))
 
         Temp = File_Input.readline().rstrip("\n")
+        Temp = Temp.split()
+        self.Rho = float(Temp[0])
+        print("{:40} {:f}".format(" The density of the material is:", self.Rho))
+
         Temp = File_Input.readline().rstrip("\n")
-        Temp = File_Input.readline().rstrip("\n")
-        self.NDOF = float(Temp) # Number of Degree of Freedom
+        Temp = Temp.split()
+        self.NDOF = float(Temp[0])
 
         close(File_Input)
 
@@ -140,24 +140,36 @@ class Input_Class:
 
         # Import user-defined modules ==============================================================
 
-
-
         print(" Opening the data file ...")
         File_Input = open(self.DataFileName,"r")
         print()
 
+        # Reading coordinates of each node
+        Temp = File_Input.readline().rstrip("\n")
         for INode in range(NPoints):
             Temp = File_Input.readline().rstrip("\n")
-            self.XYZ[INode,1] = float()
-            self.XYZ[INode,1] = float()
-            self.XYZ[INode,1] = float()
+            Temp = Temp.split()
+            for ii in range(NDim)
+                self.XYZ[INode][ii] = float(Temp[ii])
 
+        # Reading connectivities
+        Temp = File_Input.readline().rstrip("\n")
+        Temp = File_Input.readline().rstrip("\n")
         for IEl in range(NEl):
+            Temp = File_Input.readline().rstrip("\n")
+            Temp = Temp.split()
             for INode in range(NNode)
-            self.Conn[IEl,INode] = 
+                self.Conn[Temp[0]][INode] = Temp[INode+1]
 
+        # Reading Constraints
+        Temp = File_Input.readline().rstrip("\n")
+        Temp = File_Input.readline().rstrip("\n")
         for INode in range(NPoints):
             Temp = File_Input.readline().rstrip("\n")
-            self.ID[INode,]
+            Temp = Temp.split()
+            for IDim in range(NDim)
+                self.ID[Temp[0]][IDim] = Temp[IDim+1]
+
+
     
         

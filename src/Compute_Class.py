@@ -41,7 +41,7 @@ class Compute_Class:
         # Define Arrays ============================================================================
         self.XYZ       = np.zeros(Input.NPoint, Input.NDim, dtype=np.float64)  # Elemental Equations
         self.Conn      = np.zeros(Input.NEl, Input.NNode, dtype=np.float64)  # Elemental Equations
-        self.ID        = np.zeros(Input.NPoints, Input.NDOF, dtype=np.float64)      # Elemental Equations
+        self.ID        = np.zeros(Input.NPoints, Input.NDOF, dtype=np.float64) # Elemental Equations
 
         self.Me        = np.zeros(NEqEl, NEqEl, dtype=np.float64)  # Elemental Equations
         self.M_Global  = np.zeros(NEq, NEq, dtype=np.float64)      # Elemental Equations
