@@ -120,4 +120,43 @@ class Parameters_Class:
             sys.exit()
 
 
-        return (XINT, WINT)
+
+    # Shape function of the quad element
+    def Shape_Func_2D_4N(self, FN, X1, X2):
+
+        FN[1] = ( 1.0 + X1 ) * ( 1.0 - X2 ) * 0.25
+        FN[2] = ( 1.0 + X1 ) * ( 1.0 + X2 ) * 0.25
+        FN[3] = ( 1.0 - X1 ) * ( 1.0 + X2 ) * 0.25
+        FN[4] = ( 1.0 - X1 ) * ( 1.0 - X2 ) * 0.25
+
+    # Derivative of shape functions for the quad element
+    def Derivative_Shape_Func_2D_4N(self, DFXI, X1, X2):
+
+        DFXI[1][1] = + ( 1.0 - X2 ) * 0.25
+        DFXI[1][2] = - ( 1.0 + X1 ) * 0.25
+        DFXI[2][1] = + ( 1.0 + X2 ) * 0.25
+        DFXI[2][2] = + ( 1.0 + X1 ) * 0.25
+        DFXI[3][1] = - ( 1.0 + X2 ) * 0.25
+        DFXI[3][2] = + ( 1.0 - X1 ) * 0.25
+        DFXI[4][1] = - ( 1.0 - X2 ) * 0.25
+        DFXI[4][2] = - ( 1.0 - X1 ) * 0.25
+
+    # Shape functions of the triangle element
+    def Shape_Func_2D_3N(self, FN, X1, X2):
+
+        FN[1] = 1.0 - X1 - X2
+        FN[2] = X1
+        FN[3] = X2
+
+    # Derivative of the shape function of the triangle
+    def Derivative_Shape_Func_2D_3N(self, DFXI, X1, X2):
+
+        DFXI[1][1] = -1.0
+        DFXI[1][2] = -1.0
+        DFXI[2][1] = +1.0
+        DFXI[2][2] =  0.0
+        DFXI[3][1] =  0.0
+        DFXI[3][2] = +1.0
+
+
+        

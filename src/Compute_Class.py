@@ -6,7 +6,7 @@
 # The University of Texas at Austin
 #
 # Start date:    01/22/2018
-# Latest update: 01/22/2018
+# Latest update: 01/26/2018
 #
 # Comment: This class specifies the shape functions
 #
@@ -39,13 +39,16 @@ class Compute_Class:
 
 
         # Define Arrays ============================================================================
-        self.XYZ       = np.zeros(Input.NPoint, Input.NDim, dtype=np.float64)  # Elemental Equations
-        self.Conn      = np.zeros(Input.NEl, Input.NNode, dtype=np.float64)  # Elemental Equations
-        self.ID        = np.zeros(Input.NPoints, Input.NDOF, dtype=np.float64) # Elemental Equations
+        self.XYZ       = np.zeros((Input.NPoint, Input.NDim),  dtype=np.float64)  # Coordinates of nodes
+        self.Conn      = np.zeros((Input.NEl, Input.NNode),    dtype=np.float64)  # Element's Connectivity
+        self.ID        = np.zeros((Input.NPoints, Input.NDOF), dtype=np.float64)  # Constraints
 
-        self.Me        = np.zeros(NEqEl, NEqEl, dtype=np.float64)  # Elemental Equations
-        self.M_Global  = np.zeros(NEq, NEq, dtype=np.float64)      # Elemental Equations
-        self.ND        = np.zeros(NEq, NEq, dtype=np.float64)      # Elemental Equations
+        self.Me        = np.zeros((NEqEl, NEqEl), dtype=np.float64)  # Element mass matrix
+        self.M_Global  = np.zeros((NEq, NEq), dtype=np.float64)      # Global mass matrix
+        self.ND        = np.zeros((NEq, NEq), dtype=np.float64)      # Nodal connectivity
+
+        self.WINT      = np.zeros(Input.NInt, dtype=np.float64)      # Weight coefficient for numerical integration
+        self.XINT      = np.zeros(Input.NInt, dtype=np.float64)      # Integration points
 
         # Read arrays from input file ==============================================================
         Input.Read_Arrays()
@@ -59,6 +62,14 @@ class Compute_Class:
 
         for IEl in range(NEl):
 
+            print("{} {:d}".format(" Computing the mass matrix of element: ", IEl))
+
+            # Finding the local coordinates for each element
+            for ii in range(NDim):
+                for jj in range(NNode):
+                    
+
+            # Choosing the right function
             if Input.El_Type == 1: # Quad elements
                 Mass.Mass_2D_4N()
             elif Input.El_Type == 2: # Triangle element

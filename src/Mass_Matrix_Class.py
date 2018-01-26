@@ -21,110 +21,66 @@ class Mass_Matrix_Class:
                    IEL, NNode, NDim, NInt,                \   # ! Integer Variables
                    Rho,                                   \   # ! Real Variables
                    XT, ME,                                \   # ! Real Arrays
-                   GAUSS_PNT                              \   # ! Type 
+                   XINT, WINT                             \   # ! Type 
                    ):
 
         # Import built-in libraries ================================================================
         import numpy as np
 
         # Import user-defined modules ==============================================================
-
+        import Parameters_Class
 
         # Define arrays ============================================================================
-
+        DJ        = np.zeros((NDim, NDim),   dtype=np.float64)  # Jacobian matrix in the local coordinates
+        DJI       = np.zeros((NDim, NDim),   dtype=np.float64)  # Jacobian inverse matrix
+        DFX       = np.zeros((NNode, NDim),  dtype=np.float64)  # Jacobian matrix in the global coordinates
+        Phi_Phi_T = np.zeros((NNode, NNode), dtype=np.float64)  # 
 
         # Code =====================================================================================
-        
-
+        ShapeFunc = Parameters_Class.Parameters_Class()
 
         # Integrate over integration points
         for LY in range(NInt):
 
-            SF%X2  = GAUSS_PNT%XINT ( LY ) ;
-            WY     = GAUSS_PNT%WINT ( LY ) ;
+            X2  = XINT[LY]
+            WY  = WINT[LY]
 
-            DO LX = 1, NInt ;
-                SF%X1  = GAUSS_PNT%XINT ( LX ) ;
-                WX     = GAUSS_PNT%WINT ( LX ) ;
+            for LX in range(NInt):
+                X1  = XINT[LX]
+                WX  = WINT[LX]
 
-                WSTAR  = WX * WY ;
+                WSTAR  = WX * WY
 
-                ! SHAPE FUNCTIONS AND DIFFERENTIAL OF SHAPE FUNCTIONS
-                !Call     ShapeFuncSub (  SF ) ;
-                !Call DIF_ShapeFuncSub ( DSF ) ;
-                SF%FN    =     ShapeFunc_2_4 (  SF%X1,  SF%X2 ) ;
-                DSF%DFXI = Dif_ShapeFunc_2_4 ( DSF%X1, DSF%X2 ) ;
-
-                DJ   = MATMuL ( XT, DSF%DFXI ) ;
-                DETJ = DJ ( 1, 1 ) * DJ ( 2, 2 ) - DJ ( 2, 1 ) * DJ ( 1, 2 ) ;
-                FAC  = WSTAR * DETJ ;
-
-                IF ( DETJ <= 0.0_DBL ) Then ;
-                    Write(*,"('ELEMENT NUMBER',3I6,'|J|<0  -ERROR-', 'DETJ = ',E17.10)" ) IEL, LX, LY, DETJ ;
-                    Write(*, Fmt_End) ; Read(*,*) ;  STOP ;
-                End If ;
-
-                ! CALCULATING THE INVERSE OF THE JACOBIAN
-                !#Call DLINRG (NDim,DJ,NDim,DJI,NDim) ;
-                DJI ( 1, 1 ) =   DJ ( 2, 2 ) ;
-                DJI ( 2, 2 ) =   DJ ( 1, 1 ) ;
-                DJI ( 1, 2 ) = - DJ ( 1, 2 ) ;
-                DJI ( 2, 1 ) = - DJ ( 2, 1 ) ;
-
-                DJI = DJI  / DETJ ;
-
-                DFX = MATMuL ( DSF%DFXI, DJI ) ;
-
-                !#Phi_Phi_T   = MATMuL ( SF%FN, TRANSPOSE (SF%FN) )                * FAC ;
-                !#PhiX_PhiX_T = MATMuL ( DFX (:, 1), TRANSPOSE ( DFX ( : , 1 ) ) ) * FAC ;
-                !#PhiY_PhiY_T = MATMuL ( DFX (:, 1), TRANSPOSE () )                * FAC ;
-                !#PhiX_PhiY_T = MATMuL ( DFX (:, 1), TRANSPOSE (DFX ( : , 2 )) )   * FAC ;
-                !#PhiY_PhiX_T = MATMuL ( DFX (:, 2), TRANSPOSE (DFX ( : , 1 )) )   * FAC ;
-
-                DO I = 1, NNode   ;
-                    DO J = 1, NNode ;
-                        Phi_Phi_T   ( I, J ) = SF%FN ( I )     * SF%FN ( J )     * FAC ;
-                    End Do ;
-                End Do ;
-
-                ! MASS MATRIX
-                ForAll ( I = 1:NNode, J = 1:NNode, K = 1:NDim ) ME ( ( K -1 ) * NNode + I, ( K -1 ) * NNode + J ) = ME ( ( K -1 ) * NNode + I, ( K -1 ) * NNode + J ) + Rho * Phi_Phi_T ( I, J ) ;
+                # SHAPE FUNCTIONS AND DIFFERENTIAL OF SHAPE FUNCTIONS
+                ShapeFunc.Shape_Func_2D_4N(FN, X1, X2)
+                ShapeFunc.Derivative_Shape_Func_2D_4N(DFXI, X1, X2)
 
 
 
+                DJ   = MATMuL ( XT, DFXI )  # ######################################################
 
-            End Do ;
-        End Do ;
+                DETJ = DJ[1][1] * DJ[2][2] - DJ[2][1] * DJ[1][2]
+                FAC  = WSTAR * DETJ
 
+                if DETJ <= 0.0:
+                    print("{} {:d} {} {:d}".format(" Fatal error: The Jacobian for element ", IEl, " is negative: ", DETJ))
 
+                # Calculating the Jacobian Inverse
+                DJI[1][1] =   DJ[2][2]
+                DJI[2][2] =   DJ[1][1]
+                DJI[1][2] = - DJ[1][2]
+                DJI[2][1] = - DJ[2][1]
 
-!#Write(*    ,*) 'End Subroutine < MassDampStiffSLD_2D_4N >' ;
-!#Write(UnInf,*) 'End Subroutine < MassDampStiffSLD_2D_4N >' ;
-Return ;
-End Subroutine MassDampStiffSLD_2D_4N ;
+                DJI = DJI  / DETJ 
 
+                DFX = MATMuL ( DFXI, DJI ) # ######################################################
 
+                for I in range(NNode)
+                    for J in range(NNode)
+                        Phi_Phi_T[I][J] = FN[I] * FN[J] * FAC
 
-! - Real Arrays -------------------------------------------------------------------------------------------------------------------------------------
-Real (Kind=DBL)      :: XI ( 2 ) ;                ! Temprary variable for Gauss points
-Real (Kind=DBL)      :: DJ ( NDim, NDim ) ;       ! Jacobian Matrix
-Real (Kind=DBL)      :: VN ( 2 ) ;                ! Normal vector
-Real (Kind=DBL)      :: DJI ( NDim, NDim )        ! Inverse of Jacobian Matrix
-Real (Kind=DBL)      :: DFX ( NNode, NDim )       ! Temprary Matrix
-Real (Kind=DBL)      :: Phi_Phi_T ( NNode, NNode ), PhiX_PhiX_T ( NNode, NNode ), PhiY_PhiY_T ( NNode, NNode ), PhiX_PhiY_T ( NNode, NNode ), PhiY_PhiX_T ( NNode, NNode ) ;
-
-! - Complex Variables -------------------------------------------------------------------------------------------------------------------------------
-!#Complex  ::  ;
-! - Character Variables -----------------------------------------------------------------------------------------------------------------------------
-!#Character   ::  ;
-! - Logical Variables -------------------------------------------------------------------------------------------------------------------------------
-!#Logical   ::  ;
-
-! - Type DECLERATIONS -------------------------------------------------------------------------------------------------------------------------------
-Type (  SF_2_4 ) ::  SF ;  ! SHAPE FUNCTION
-Type ( DSF_2_4 ) :: DSF ;  ! DIFFERENTIALS OF SHAPE FUNCTION
-
-
+                # Element mass matrix
+                ForAll ( I = 1:NNode, J = 1:NNode, K = 1:NDim ) ME ( ( K -1 ) * NNode + I, ( K -1 ) * NNode + J ) = ME ( ( K -1 ) * NNode + I, ( K -1 ) * NNode + J ) + Rho * Phi_Phi_T ( I, J ) ######
 
 
     def Mass_2D_3N(self):
