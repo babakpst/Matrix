@@ -49,6 +49,11 @@ class Input_Class:
         print(" {0} {1}".format(" The output path is:", self.Output_Dir))
 
         # Check whether the input file exists 
+        if not os.path.exists(self.InputFileName):
+            print("{}".format("       FATAL ERROR   "))
+            print("{}".format(" The input file does not exist!"))
+            print("{}".format(" Please double check the input file or dirctory"))
+            print("{}".format(" Simulation terminates"))
 
         # Create or Clean the output directory
         if os.path.exists(self.Output_Dir):
@@ -56,8 +61,7 @@ class Input_Class:
             Temp = input("Press Enter if it is alright, otherwise copy the content of the folder. --IS IT ALRIGHT? --")
             shutil.rmtree(self.Output_Dir, ignore_errors=True)
             os.makedirs(self.Output_Dir)
-
-        if not os.path.exists(self.Output_Dir):
+        elif not os.path.exists(self.Output_Dir):
             print(" The output directory does not exist. ")
             print(" Creating the output directory ... ")
             os.makedirs(self.Output_Dir)
@@ -159,7 +163,7 @@ class Input_Class:
             Temp = File_Input.readline().rstrip("\n")
             Temp = Temp.split()
             for INode in range(NNode)
-                self.Conn[Temp[0]][INode] = Temp[INode+1]
+                self.Conn[INode][Temp[0]] = Temp[INode+1]
 
         # Reading Constraints
         Temp = File_Input.readline().rstrip("\n")

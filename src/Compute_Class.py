@@ -40,7 +40,7 @@ class Compute_Class:
 
         # Define Arrays ============================================================================
         self.XYZ       = np.zeros((Input.NPoint, Input.NDim),  dtype=np.float64)  # Coordinates of nodes
-        self.Conn      = np.zeros((Input.NEl, Input.NNode),    dtype=np.float64)  # Element's Connectivity
+        self.Conn      = np.zeros((Input.NNode, Input.NEl),    dtype=np.float64)  # Element's Connectivity
         self.ID        = np.zeros((Input.NPoints, Input.NDOF), dtype=np.float64)  # Constraints
 
         self.Me        = np.zeros((NEqEl, NEqEl), dtype=np.float64)  # Element mass matrix
@@ -49,6 +49,8 @@ class Compute_Class:
 
         self.WINT      = np.zeros(Input.NInt, dtype=np.float64)      # Weight coefficient for numerical integration
         self.XINT      = np.zeros(Input.NInt, dtype=np.float64)      # Integration points
+
+        self.XT        = np.zeros((Input.NDim, Input.NNode), dtype=np.float64) # Local coordinates of the each element
 
         # Read arrays from input file ==============================================================
         Input.Read_Arrays()
@@ -60,6 +62,10 @@ class Compute_Class:
         # Creating the Mass_Matrix object
         Mass = Mass_Matrix_Class.Mass_Matrix_Class()
 
+        # Output folder
+        Output_File = os.path.join( Ex.Output_Dir,("Mass_"+Input.Model) ) 
+        Output = open(Output_File,"w")
+
         for IEl in range(NEl):
 
             print("{} {:d}".format(" Computing the mass matrix of element: ", IEl))
@@ -67,17 +73,55 @@ class Compute_Class:
             # Finding the local coordinates for each element
             for ii in range(NDim):
                 for jj in range(NNode):
-                    
+                    self.XT[ii][jj] = self.XYZ[Conn[jj][IEl]][ii]
+
+            # Initialize the mass matrix
+            ME[:][:]  = 0.0
 
             # Choosing the right function
             if Input.El_Type == 1: # Quad elements
-                Mass.Mass_2D_4N()
+                Mass.Mass_2D_4N(                                 \
+                    IEL, Input.NNode, Input.NDim, Input.NInt,    \   # ! Integer Variables
+                    Input.Rho,                                   \   # ! Real Variables
+                    self.XT, self.ME,                            \   # ! Real Arrays
+                    self.XINT, self.WINT
+                )
             elif Input.El_Type == 2: # Triangle element
                 Mass.Mass_2D_3N()
 
-            Assemble
+            Output.write(" The mass matrix of element number ")
+            Output.write(str(IEl))
+            Output.write("\n")
+            Matrix = np.matrix(self.ME)
+            for line in Matrix:
+                np.savetxt(Output, line, fmt="%.6f")
+            Output.write("\n")
+            Output.write("\n")
+            
+
+            Assemble()
 
         # print results
+        del Output
+
+
 
     def Assemble (self):
-        pass
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

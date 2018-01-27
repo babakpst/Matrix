@@ -55,9 +55,7 @@ class Mass_Matrix_Class:
                 ShapeFunc.Shape_Func_2D_4N(FN, X1, X2)
                 ShapeFunc.Derivative_Shape_Func_2D_4N(DFXI, X1, X2)
 
-
-
-                DJ   = MATMuL ( XT, DFXI )  # ######################################################
+                DJ   = numpy.matmul( XT, DFXI )
 
                 DETJ = DJ[1][1] * DJ[2][2] - DJ[2][1] * DJ[1][2]
                 FAC  = WSTAR * DETJ
@@ -73,15 +71,15 @@ class Mass_Matrix_Class:
 
                 DJI = DJI  / DETJ 
 
-                DFX = MATMuL ( DFXI, DJI ) # ######################################################
+                DFX = numpy.matmul( DFXI, DJI ) 
 
                 for I in range(NNode)
                     for J in range(NNode)
                         Phi_Phi_T[I][J] = FN[I] * FN[J] * FAC
 
-                # Element mass matrix
-                ForAll ( I = 1:NNode, J = 1:NNode, K = 1:NDim ) ME ( ( K -1 ) * NNode + I, ( K -1 ) * NNode + J ) = ME ( ( K -1 ) * NNode + I, ( K -1 ) * NNode + J ) + Rho * Phi_Phi_T ( I, J ) ######
-
+                # Element mass matrix <Modify>
+                for IDim in range(NDim):
+                    ME[IDim*NNode:(IDim+1)*NNode][IDim*NNode:(IDim+1)*NNode] += Rho * Phi_Phi_T[:][:]
 
     def Mass_2D_3N(self):
         pass
