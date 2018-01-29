@@ -28,6 +28,7 @@ class Input_Class:
         # Read the name of the input file from address file
         print(" ============== Input Class ==============")
         Address = open("Address.txt","r")
+                        
         Temp = Address.readline().rstrip("\n")      # 1
         File = Address.readline().rstrip("\n")  # 2, Input file name
         
@@ -153,7 +154,7 @@ class Input_Class:
         for INode in range(NPoints):
             Temp = File_Input.readline().rstrip("\n")
             Temp = Temp.split()
-            for ii in range(NDim)
+            for ii in range(NDim):
                 self.XYZ[INode][ii] = float(Temp[ii])
 
         # Reading connectivities
@@ -162,7 +163,7 @@ class Input_Class:
         for IEl in range(NEl):
             Temp = File_Input.readline().rstrip("\n")
             Temp = Temp.split()
-            for INode in range(NNode)
+            for INode in range(NNode):
                 self.Conn[INode][Temp[0]] = Temp[INode+1]
 
         # Reading Constraints
@@ -171,7 +172,7 @@ class Input_Class:
         for INode in range(NPoints):
             Temp = File_Input.readline().rstrip("\n")
             Temp = Temp.split()
-            for IDim in range(NDim)
+            for IDim in range(NDim):
                 self.ID[Temp[0]][IDim] = Temp[IDim+1]
 
 

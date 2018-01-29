@@ -41,7 +41,6 @@ class Compute_Class:
     import Input_Class
     import Parameters_Class
     import Mass_Matrix_Class
-    import Results_Class
 
     # Read data from input file ================================================================
     Input = Input_Class.Input_Class()
@@ -95,10 +94,10 @@ class Compute_Class:
 
       # Choosing the right function
       if Input.El_Type == 1: # Quad elements
-        Mass.Mass_2D_4N(                               \
-          IEL, Input.NNode, Input.NDim, Input.NInt,    \   # ! Integer Variables
-          Input.Rho,                                   \   # ! Real Variables
-          self.XT, self.ME,                            \   # ! Real Arrays
+        Mass.Mass_2D_4N(                               
+          IEL, Input.NNode, Input.NDim, Input.NInt,       # ! Integer Variables
+          Input.Rho,                                      # ! Real Variables
+          self.XT, self.ME,                               # ! Real Arrays
           self.XINT, self.WINT
         )
       elif Input.El_Type == 2: # Triangle element
@@ -119,9 +118,21 @@ class Compute_Class:
         for jj in range(NDOF):
           ND[(jj-1) * NNode + ii ] = ID[Conn[ii][IEl]][jj]
 
-        Assemble()
+      Assemble(                
+                self.NEqEl,                # Integer Variables
+                self.ND,                   # Integer Arrays
+                self.ME, self.M_Global     # Real Arrays  
+                )
 
-    # print results
+
+    Output.write(" Global mass matrix")
+    Output.write("\n")
+    Matrix = np.matrix(self.M_Global)
+    for line in Matrix:
+      np.savetxt(Output, line, fmt="%.6f")
+    Output.write("\n")
+    Output.write("\n")
+
     del Output
 
 
@@ -147,10 +158,10 @@ class Compute_Class:
 #
 ####################################################################################################
 
-  def Assemble (self,                /
-                NEqEl,               / # Integer Variables
-                ND,                  / # Integer Arrays
-                ME, M_Global         / # Real Arrays  
+  def Assemble (self,                
+                NEqEl,                # Integer Variables
+                ND,                   # Integer Arrays
+                ME, M_Global          # Real Arrays  
                 ):
 
     for ll in range(NEqEl):

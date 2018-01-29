@@ -18,10 +18,10 @@ class Mass_Matrix_Class:
         pass
 
     def Mass_2D_4N(self,
-                   IEL, NNode, NDim, NInt,                \   # ! Integer Variables
-                   Rho,                                   \   # ! Real Variables
-                   XT, ME,                                \   # ! Real Arrays
-                   XINT, WINT                             \   # ! Type 
+                   IEL, NNode, NDim, NInt,                   # ! Integer Variables
+                   Rho,                                      # ! Real Variables
+                   XT, ME,                                   # ! Real Arrays
+                   XINT, WINT                                # ! Type 
                    ):
 
         # Import built-in libraries ================================================================
@@ -73,8 +73,8 @@ class Mass_Matrix_Class:
 
                 DFX = numpy.matmul( DFXI, DJI ) 
 
-                for I in range(NNode)
-                    for J in range(NNode)
+                for I in range(NNode):
+                    for J in range(NNode):
                         Phi_Phi_T[I][J] = FN[I] * FN[J] * FAC
 
                 # Element mass matrix <Modify>
