@@ -1,17 +1,29 @@
-
 ####################################################################################################
+# Purpose: This class containts the functions that computes the mass matrix.
 #
 # Developed by: Babak Poursartip
-# Supervised by: Clint Dawson
+# 
 # The Institute for Computational Engineering and Sciences (ICES)
 # The University of Texas at Austin
 #
-# Start date:    01/22/2018
-# Latest update: 01/26/2018
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/22/2018 - Class initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
 #
-# Comment: This class containts the functions that computes the mass matrix.
+# File version $Id
 #
-# version: 0.0 
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#  . . . . . . . . . . . . . . . . Variables . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+# - NDOF: Number of Degrees of Freedoms for each node -read from the input file.
+# - NNode: Total number of nodes in each element - read from the input file.
+# - NEqEl: Total number of equations for each element= NDOF*NNode - Computed in the code
+#
+#  . . . . . . . . . . . . . . . . Arrays  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+# -ND[NEqEl] (int): Nodal location array. We use this array to determine the location of matrix 
+#                   assembling in the global matrix.
+# -ID[NPoints][NDOF] (int): Holds the constrains on all grid points --read from the input file. 
 #
 ####################################################################################################
 
@@ -48,7 +60,7 @@ class Compute_Class:
 
     self.Me        = np.zeros((NEqEl, NEqEl), dtype=np.float64)  # Element mass matrix
     self.M_Global  = np.zeros((NEq, NEq), dtype=np.float64)      # Global mass matrix
-    self.ND        = np.zeros((NEq, NEq), dtype=np.float64)      # Nodal connectivity
+    self.ND        = np.zeros(NEqEl, dtype=np.float64)             # Nodal connectivity
 
     self.WINT      = np.zeros(Input.NInt, dtype=np.float64)      # Weight coefficient for numerical integration
     self.XINT      = np.zeros(Input.NInt, dtype=np.float64)      # Integration points
@@ -83,7 +95,7 @@ class Compute_Class:
 
       # Choosing the right function
       if Input.El_Type == 1: # Quad elements
-        Mass.Mass_2D_4N(                                 \
+        Mass.Mass_2D_4N(                               \
           IEL, Input.NNode, Input.NDim, Input.NInt,    \   # ! Integer Variables
           Input.Rho,                                   \   # ! Real Variables
           self.XT, self.ME,                            \   # ! Real Arrays
@@ -101,13 +113,11 @@ class Compute_Class:
       Output.write("\n")
       Output.write("\n")
         
-      # Form the ND matrix for assembling
+      # Form the ND array for assembling - This array indicates how to assemble the element 
+      # matrix in the global matrix
       for ii in range(NNode):
-
-
-
-
-
+        for jj in range(NDOF):
+          ND[(jj-1) * NNode + ii ] = ID[Conn[ii][IEl]][jj]
 
         Assemble()
 
@@ -115,24 +125,41 @@ class Compute_Class:
     del Output
 
 
+####################################################################################################
+# Purpose: This funciton assembles the local matrix in the global matrix.
+#
+# Developed by: Babak Poursartip
+# 
+# The Institute for Computational Engineering and Sciences (ICES)
+# The University of Texas at Austin
+#
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/29/2018 - Function initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
+#
+# File version $Id
+#
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#
+#
+#
+####################################################################################################
 
-  def Assemble (self):
+  def Assemble (self,                /
+                NEqEl,               / # Integer Variables
+                ND,                  / # Integer Arrays
+                ME, M_Global         / # Real Arrays  
+                ):
 
-        
+    for ll in range(NEqEl):
+      for nn in range(NEqEl):
+        ii  = ND[ll]
+        jj  = ND[nn]
 
+        if ii == 0 or jj == 0:
+          continue
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        M_Global[ii][jj] += ME[ll][nn]
 
