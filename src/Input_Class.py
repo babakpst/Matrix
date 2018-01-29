@@ -30,15 +30,15 @@ class Input_Class:
         Address = open("Address.txt","r")
                         
         Temp = Address.readline().rstrip("\n")      # 1
-        File = Address.readline().rstrip("\n")  # 2, Input file name
+        File = Address.readline().rstrip("\n")      # 2, Input file name
         
-        Temp = Address.readline().rstrip("\n")  # 3
-        Temp = Address.readline().rstrip("\n")  # 4
-        Input_Dir = Address.readline().rstrip("\n")  # 5
+        Temp = Address.readline().rstrip("\n")      # 3
+        Temp = Address.readline().rstrip("\n")      # 4
+        Input_Dir = Address.readline().rstrip("\n") # 5
         
-        Temp = Address.readline().rstrip("\n")  # 6
-        Temp = Address.readline().rstrip("\n")  # 7
-        Output_Dir = Address.readline().rstrip("\n")  # 8
+        Temp = Address.readline().rstrip("\n")      # 6
+        Temp = Address.readline().rstrip("\n")      # 7
+        Output_Dir = Address.readline().rstrip("\n")# 8
 
         # Create Input/Output directories
         self.Model = File
@@ -59,7 +59,7 @@ class Input_Class:
         # Create or Clean the output directory
         if os.path.exists(self.Output_Dir):
             print(" The output folder exists! The content of this folder would be emptied.")
-            Temp = input("Press Enter if it is alright, otherwise copy the content of the folder. --IS IT ALRIGHT? --")
+            #Temp = input("Press Enter if it is alright, otherwise copy the content of the folder. --IS IT ALRIGHT? --")
             shutil.rmtree(self.Output_Dir, ignore_errors=True)
             os.makedirs(self.Output_Dir)
         elif not os.path.exists(self.Output_Dir):
@@ -93,37 +93,37 @@ class Input_Class:
 
         Temp = File_Input.readline().rstrip("\n")
         Temp = Temp.split()
-        self.NEl = float(Temp[0])
-        print("{:40} {:f}".format(" The total number of elements is\are:", self.NEl))
+        self.NEl = int(Temp[0])
+        print("{:40} {:f}".format(" The total number of elements is/are:", self.NEl))
 
         Temp = File_Input.readline().rstrip("\n")
         Temp = Temp.split()
-        self.El_Type = float(Temp[0])
+        self.El_Type = int(Temp[0])
         print("{:40} {:f}".format(" The element type is:", self.El_Type))
 
         Temp = File_Input.readline().rstrip("\n")
         Temp = Temp.split()
-        self.NInt_Type = float(Temp[0])
+        self.NInt_Type = int(Temp[0])
         print("{:40} {:f}".format(" The integration point type is:", self.NInt_Type))
 
         Temp = File_Input.readline().rstrip("\n")
         Temp = Temp.split()
-        self.NInt = float(Temp[0])
-        print("{:40} {:f}".format(" The integration point type is:", self.NInt))
+        self.NInt = int(Temp[0])
+        print("{:40} {:f}".format(" Number of integration points:", self.NInt))
 
         Temp = File_Input.readline().rstrip("\n")
         Temp = Temp.split()
-        self.NDim = float(Temp[0])
+        self.NDim = int(Temp[0])
         print("{:40} {:f}".format(" The dimension of space is:", self.NDim))
 
         Temp = File_Input.readline().rstrip("\n")
         Temp = Temp.split()
-        self.NNode = float(Temp[0])
+        self.NNode = int(Temp[0])
         print("{:40} {:f}".format(" The Number of Nodes of each element is:", self.NNode))
 
         Temp = File_Input.readline().rstrip("\n")
         Temp = Temp.split()
-        self.NPoints = float(Temp[0])
+        self.NPoints = int(Temp[0])
         print("{:40} {:f}".format(" The Number of Points in the model:", self.NPoints))
 
         Temp = File_Input.readline().rstrip("\n")
@@ -133,9 +133,10 @@ class Input_Class:
 
         Temp = File_Input.readline().rstrip("\n")
         Temp = Temp.split()
-        self.NDOF = float(Temp[0])
+        self.NDOF = int(Temp[0])
+        print("{:40} {:f}".format(" Degrees of freedom of each node:", self.NDOF))
 
-        close(File_Input)
+        del File_Input
 
 
     def Read_Arrays(self):
@@ -151,29 +152,29 @@ class Input_Class:
 
         # Reading coordinates of each node
         Temp = File_Input.readline().rstrip("\n")
-        for INode in range(NPoints):
+        for INode in range(self.NPoints):
             Temp = File_Input.readline().rstrip("\n")
             Temp = Temp.split()
-            for ii in range(NDim):
+            for ii in range(self.NDim):
                 self.XYZ[INode][ii] = float(Temp[ii])
 
         # Reading connectivities
         Temp = File_Input.readline().rstrip("\n")
         Temp = File_Input.readline().rstrip("\n")
-        for IEl in range(NEl):
+        for IEl in range(self.NEl):
             Temp = File_Input.readline().rstrip("\n")
             Temp = Temp.split()
-            for INode in range(NNode):
-                self.Conn[INode][Temp[0]] = Temp[INode+1]
+            for INode in range(self.NNode):
+                self.Conn[INode][Temp[0]] = int(Temp[INode+1])
 
         # Reading Constraints
         Temp = File_Input.readline().rstrip("\n")
         Temp = File_Input.readline().rstrip("\n")
-        for INode in range(NPoints):
+        for INode in range(self.NPoints):
             Temp = File_Input.readline().rstrip("\n")
             Temp = Temp.split()
-            for IDim in range(NDim):
-                self.ID[Temp[0]][IDim] = Temp[IDim+1]
+            for IDim in range(self.NDim):
+                self.ID[Temp[0]][IDim] = int(Temp[IDim+1])
 
 
     

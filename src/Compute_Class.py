@@ -53,7 +53,7 @@ class Compute_Class:
 
 
     # Define Arrays ============================================================================
-    self.XYZ       = np.zeros((Input.NPoint, Input.NDim),  dtype=np.float64)  # Coordinates of nodes
+    self.XYZ       = np.zeros((Input.NPoints, Input.NDim),  dtype=np.float64)  # Coordinates of nodes
     self.Conn      = np.zeros((Input.NNode, Input.NEl),    dtype=np.float64)  # Element's Connectivity
     self.ID        = np.zeros((Input.NPoints, Input.NDOF), dtype=np.float64)  # Constraints
 
