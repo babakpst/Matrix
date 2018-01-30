@@ -18,7 +18,7 @@ class Input_Class:
     def __int__(self):
         pass
 
-    def Read_Data(self):
+    def Read_Data_def(self):
 
         # Import built-in libraries ================================================================
         import os
@@ -75,7 +75,7 @@ class Input_Class:
 
 
 
-    def Read_Input(self):
+    def Read_Input_def(self):
 
         # Import built-in libraries ================================================================
         import numpy as np
@@ -139,10 +139,11 @@ class Input_Class:
         del File_Input
 
 
-    def Read_Arrays(self):
+    def Read_Arrays_def(self, NEq, XYZ, Conn, ID):
 
         # Import built-in libraries ================================================================
         import numpy as np
+        import sys
 
         # Import user-defined modules ==============================================================
 
@@ -151,30 +152,51 @@ class Input_Class:
         print()
 
         # Reading coordinates of each node
+        print(" Reading coordinates ...")
         Temp = File_Input.readline().rstrip("\n")
         for INode in range(self.NPoints):
             Temp = File_Input.readline().rstrip("\n")
             Temp = Temp.split()
             for ii in range(self.NDim):
-                self.XYZ[INode][ii] = float(Temp[ii])
+                XYZ[INode][ii] = float(Temp[ii])
 
         # Reading connectivities
+        print(" Reading connectivities ...")
         Temp = File_Input.readline().rstrip("\n")
         Temp = File_Input.readline().rstrip("\n")
         for IEl in range(self.NEl):
             Temp = File_Input.readline().rstrip("\n")
             Temp = Temp.split()
             for INode in range(self.NNode):
-                self.Conn[INode][Temp[0]] = int(Temp[INode+1])
+                Conn[INode][int(Temp[0])-1] = int(Temp[INode+1])-1
 
         # Reading Constraints
+        print(" Reading constraints ...")
         Temp = File_Input.readline().rstrip("\n")
         Temp = File_Input.readline().rstrip("\n")
         for INode in range(self.NPoints):
             Temp = File_Input.readline().rstrip("\n")
             Temp = Temp.split()
             for IDim in range(self.NDim):
-                self.ID[Temp[0]][IDim] = int(Temp[IDim+1])
+                ID[int(Temp[0])-1][IDim] = int(Temp[IDim+1])
+                if (not ID[int(Temp[0])-1][IDim] == 0) or (not ID[int(Temp[0])-1][IDim] == 0):
+                    print(" Wrong input for constraints. Modify the input file.")
+                    sys.exit(" The simulation terminated due to the input file.")
+
+
+
+        # Finding the equation number
+        NEq = -1
+        for IDim in range(self.NDim):
+            for INode in range(self.NPoints):
+                if ID[INode][IDim] == 0:
+                    NEq += 1
+                    ID[INode][IDim] = NEq
+                elif ID[INode][IDim] == 1:
+                    ID[INode][IDim] = 0
+        
+        print("{} {:d}".format(" Total number of equations: ",NEq))
+
 
 
     
