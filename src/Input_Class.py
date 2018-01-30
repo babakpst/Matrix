@@ -193,7 +193,7 @@ class Input_Class:
                     NEq += 1
                     ID[INode][IDim] = NEq
                 elif ID[INode][IDim] == 1:
-                    ID[INode][IDim] = 0
+                    ID[INode][IDim] = -1
         
         print("{} {:d}".format(" Total number of equations: ",NEq))
 

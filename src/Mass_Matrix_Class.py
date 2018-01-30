@@ -18,6 +18,75 @@ class Mass_Matrix_Class:
         pass
 
 
+####################################################################################################
+# Purpose: This funciton conducts a matrix-matrix multiplication.
+#
+# Developed by: Babak Poursartip
+# 
+# The Institute for Computational Engineering and Sciences (ICES)
+# The University of Texas at Austin
+#
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/29/2018 - Function initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
+#
+# File version $Id
+#
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#
+# -C[len(A)][len(B)] (float64): The result matrix.
+#
+#
+#
+####################################################################################################
+
+    def matrixmult_def(A, B):
+
+        import numpy as np
+
+        C = np.zeros( (len(A),len(B)), dtype=np.float64)
+        
+        for i in range(len(A)):
+            for j in range(len(B[0])):
+                for k in range(len(B)):
+                    print("i=", i, "j=", j,"k=", k)
+                    C[i][j] += A[i][k]*B[k][j]
+
+        print(" Multiplication is done.")
+        return C
+
+
+
+####################################################################################################
+# Purpose: This funciton computes the mass matrix of a quad element: 2D 4 noded.
+#
+# Developed by: Babak Poursartip
+# 
+# The Institute for Computational Engineering and Sciences (ICES)
+# The University of Texas at Austin
+#
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/22/2018 - Function initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
+# V0.2: 01/30/2018 - Minor changes.
+#
+# File version $Id
+#
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#
+# -DJ[NDim][NDim] (float):  Jacobian matrix in the local coordinates
+# -DJI[NDim][NDim] (float):  Jacobian inverse matrix
+# -DFX[NNode][NDim] (float64):  Jacobian matrix in the global coordinates
+# -DFXI[NNode][NDim] (float64):  Inverse Jacobian matrix in the global coordinates
+# -Phi_Phi_T[NNode][NNode] (float64)  A matrix holding N.N^T
+# -FN[NNode] (float64): Shape function array
+#
+#
+####################################################################################################
     def Mass_2D_4N_def(self,
                    IEL, NNode, NDim, NInt,                   # ! Integer Variables
                    Rho,                                      # ! Real Variables
@@ -30,26 +99,6 @@ class Mass_Matrix_Class:
 
         # Import user-defined modules ==============================================================
         import Parameters_Class
-
-
-        def matrixmult_def(A, B):
-
-            import numpy as np
-
-            #C = [[0 for row in range(len(A))] for col in range(len(B[0]))]
-            C = np.zeros( (len(A),len(B)), dtype=np.float64)
-            print(C)
-            print(len(A))
-            print(len(B))
-            
-            for i in range(len(A)):
-                for j in range(len(B[0])):
-                    for k in range(len(B)):
-                        print("i=", i, "j=", j,"k=", k)
-                        C[i][j] += A[i][k]*B[k][j]
-
-            print(" Multiplication is done.")
-            return C
 
         # Define arrays ============================================================================
         DJ        = np.zeros((NDim, NDim),   dtype=np.float64)  # Jacobian matrix in the local coordinates

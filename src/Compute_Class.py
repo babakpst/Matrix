@@ -32,6 +32,47 @@ class Compute_Class:
   def __init__(self):
       pass
 
+
+####################################################################################################
+# Purpose: This funciton assembles the local matrix in the global matrix.
+#
+# Developed by: Babak Poursartip
+# 
+# The Institute for Computational Engineering and Sciences (ICES)
+# The University of Texas at Austin
+#
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/29/2018 - Function initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
+#
+# File version $Id
+#
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#
+#
+#
+####################################################################################################
+
+  def Assemble (self,                
+                NEqEl,                # Integer Variables
+                ND,                   # Integer Arrays
+                ME, M_Global          # Real Arrays  
+                ):
+
+    for ll in range(NEqEl):
+      for nn in range(NEqEl):
+        ii  = ND[ll]
+        jj  = ND[nn]
+
+        if ii == -1 or jj == -1:
+          continue
+        
+        print("Assemble",ii,jj,ll,nn)
+        M_Global[ii][jj] += ME[ll][nn]
+
+
   def Compute_Matrices(self):
 
     # Import built-in libraries ================================================================
@@ -44,25 +85,6 @@ class Compute_Class:
     import Parameters_Class
     import Mass_Matrix_Class
 
-    def Assemble (                
-                  NEqEl,                # Integer Variables
-                  ND,                   # Integer Arrays
-                  ME, M_Global          # Real Arrays  
-                  ):
-      print("ND",ND)
-      for ll in range(NEqEl):
-        for nn in range(NEqEl):
-          ii  = ND[ll]
-          jj  = ND[nn]
-
-          if ii == 0 or jj == 0:
-            continue
-          
-          print(ii,jj,ll,nn)
-          M_Global[ii][jj] += ME[ll][nn]
-
-
-
     # Read data from input file ================================================================
     Input = Input_Class.Input_Class()
     Input.Read_Data_def()  # Reads the address file 
@@ -71,8 +93,7 @@ class Compute_Class:
     # Basic calculations =======================================================================
     NEqEl  = Input.NDOF * Input.NNode      # Number of Equations(NDOF) for each element
     #NEq    = Input.NDOF * Input.NPoints    # Number of Equations(NDOF) for the entire model
-    self.NEq = 7
-    
+    self.NEq = 8    
 
     # Define Arrays ============================================================================
     self.XYZ  = np.zeros((Input.NPoints, Input.NDim),  dtype=np.float64)  # Coordinates of nodes
@@ -143,7 +164,9 @@ class Compute_Class:
         for jj in range(Input.NDOF):
           self.ND[(jj-1) * Input.NNode + ii ] = self.ID[self.Conn[ii][IEl]][jj]
 
-      Assemble(                
+      print("ND",self.ND)
+
+      self.Assemble(                
                 NEqEl,                # Integer Variables
                 self.ND,                   # Integer Arrays
                 self.ME, self.M_Global     # Real Arrays  
@@ -159,28 +182,5 @@ class Compute_Class:
     Output.write("\n")
 
     del Output
-
-
-####################################################################################################
-# Purpose: This funciton assembles the local matrix in the global matrix.
-#
-# Developed by: Babak Poursartip
-# 
-# The Institute for Computational Engineering and Sciences (ICES)
-# The University of Texas at Austin
-#
-# ================================ V E R S I O N ===================================================
-# V0.0: 01/29/2018 - Function initiation.
-# V0.1: 01/29/2018 - Function compiled successfully for the first time.
-#
-# File version $Id
-#
-#
-# ================================ L O C A L   V A R I A B L E S ===================================
-# (Refer to the main code to see the list of imported variables)
-#
-#
-#
-####################################################################################################
 
 
