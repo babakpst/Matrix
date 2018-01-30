@@ -42,7 +42,7 @@ class Mass_Matrix_Class:
 #
 ####################################################################################################
 
-    def matrixmult_def(A, B):
+    def matrixmult_def(self, A, B):
 
         import numpy as np
 
@@ -51,10 +51,7 @@ class Mass_Matrix_Class:
         for i in range(len(A)):
             for j in range(len(B[0])):
                 for k in range(len(B)):
-                    print("i=", i, "j=", j,"k=", k)
                     C[i][j] += A[i][k]*B[k][j]
-
-        print(" Multiplication is done.")
         return C
 
 
@@ -127,7 +124,7 @@ class Mass_Matrix_Class:
                 ShapeFunc.Shape_Func_2D_4N_def(FN, X1, X2)
                 ShapeFunc.Derivative_Shape_Func_2D_4N_def(DFXI, X1, X2)
 
-                DJ   = matrixmult_def(XT, DFXI)
+                DJ   = self.matrixmult_def(XT, DFXI)
 
                 DETJ = DJ[0][0] * DJ[1][1] - DJ[1][0] * DJ[0][1]
                 FAC  = WSTAR * DETJ
@@ -143,7 +140,7 @@ class Mass_Matrix_Class:
 
                 DJI = DJI  / DETJ 
 
-                DFX = matrixmult_def(DFXI,DJI) 
+                DFX = self.matrixmult_def(DFXI,DJI) 
 
                 for I in range(NNode):
                     for J in range(NNode):
@@ -155,6 +152,39 @@ class Mass_Matrix_Class:
                       for JNode in range(NNode):
                         ME[IDim*NNode+INode][IDim*NNode+JNode] += Rho * Phi_Phi_T[INode][JNode]
 
+
+
+
+
+####################################################################################################
+# Purpose: This funciton computes the mass matrix of a quad element: 2D 4 noded.
+#
+# Developed by: Babak Poursartip
+# 
+# The Institute for Computational Engineering and Sciences (ICES)
+# The University of Texas at Austin
+#
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/22/2018 - Function initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
+# V0.2: 01/30/2018 - Minor changes.
+#
+# File version $Id
+#
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#
+# -DJ[NDim][NDim] (float):  Jacobian matrix in the local coordinates
+# -DJI[NDim][NDim] (float):  Jacobian inverse matrix
+# -DFX[NNode][NDim] (float64):  Jacobian matrix in the global coordinates
+# -DFXI[NNode][NDim] (float64):  Inverse Jacobian matrix in the global coordinates
+# -Phi_Phi_T[NNode][NNode] (float64)  A matrix holding N.N^T
+# -FN[NNode] (float64): Shape function array
+#
+#
+####################################################################################################
+
     def Mass_2D_3N_def(self):
-        pass
+        
 

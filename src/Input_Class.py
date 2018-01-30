@@ -139,7 +139,7 @@ class Input_Class:
         del File_Input
 
 
-    def Read_Arrays_def(self, NEq, XYZ, Conn, ID):
+    def Read_Arrays_def(self, XYZ, Conn, ID):
 
         # Import built-in libraries ================================================================
         import numpy as np
@@ -158,7 +158,7 @@ class Input_Class:
             Temp = File_Input.readline().rstrip("\n")
             Temp = Temp.split()
             for ii in range(self.NDim):
-                XYZ[INode][ii] = float(Temp[ii])
+                XYZ[int(Temp[0])-1][ii] = float(Temp[ii+1])
 
         # Reading connectivities
         print(" Reading connectivities ...")
@@ -186,16 +186,17 @@ class Input_Class:
 
 
         # Finding the equation number
-        NEq = -1
+        self.NEq = -1
         for IDim in range(self.NDim):
             for INode in range(self.NPoints):
                 if ID[INode][IDim] == 0:
-                    NEq += 1
-                    ID[INode][IDim] = NEq
+                    self.NEq += 1
+                    ID[INode][IDim] = self.NEq
                 elif ID[INode][IDim] == 1:
                     ID[INode][IDim] = -1
-        
-        print("{} {:d}".format(" Total number of equations: ",NEq))
+
+        self.NEq += 1        
+        print("{} {:d}".format(" Total number of equations: ",self.NEq))
 
 
 

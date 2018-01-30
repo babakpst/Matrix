@@ -68,8 +68,6 @@ class Compute_Class:
 
         if ii == -1 or jj == -1:
           continue
-        
-        print("Assemble",ii,jj,ll,nn)
         M_Global[ii][jj] += ME[ll][nn]
 
 
@@ -93,7 +91,7 @@ class Compute_Class:
     # Basic calculations =======================================================================
     NEqEl  = Input.NDOF * Input.NNode      # Number of Equations(NDOF) for each element
     #NEq    = Input.NDOF * Input.NPoints    # Number of Equations(NDOF) for the entire model
-    self.NEq = 8    
+    #self.NEq = 0    
 
     # Define Arrays ============================================================================
     self.XYZ  = np.zeros((Input.NPoints, Input.NDim),  dtype=np.float64)  # Coordinates of nodes
@@ -109,10 +107,10 @@ class Compute_Class:
     self.XT   = np.zeros((Input.NDim, Input.NNode), dtype=np.float64) # Local coordinates of each element
 
     # Read arrays from input file ==============================================================
-    Input.Read_Arrays_def(self.NEq, self.XYZ, self.Conn, self.ID)
+    Input.Read_Arrays_def(self.XYZ, self.Conn, self.ID)
 
-    print("{} {:d}".format(" Total number of equations: ", self.NEq))
-    self.M_Global  = np.zeros((self.NEq, self.NEq), dtype=np.float64)      # Global mass matrix
+    print("{} {:d}".format(" Total number of equations are: ", Input.NEq))
+    self.M_Global  = np.zeros((Input.NEq, Input.NEq), dtype=np.float64)      # Global mass matrix
 
     # Extracting Integration points
     Parameters = Parameters_Class.Parameters_Class(Input.NInt, Input.NInt_Type)
