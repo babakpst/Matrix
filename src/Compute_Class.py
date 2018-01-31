@@ -77,6 +77,7 @@ class Compute_Class:
     import numpy as np
     import os
     import shutil
+    import csv
 
     # Import user-defined modules ==============================================================
     import Input_Class
@@ -125,6 +126,7 @@ class Compute_Class:
     Mass = Mass_Matrix_Class.Mass_Matrix_Class()
 
     # Output folder
+    #Output_File = os.path.join(Input.Output_Dir,("Mass_"+os.path.splitext(Input.Model)[0]+".csv")) 
     Output_File = os.path.join(Input.Output_Dir,("Mass_"+Input.Model)) 
     Output = open(Output_File,'w')
 
@@ -156,15 +158,20 @@ class Compute_Class:
             self.XINT, self.WINT            
             )
 
+
+      #writer = csv.writer(Output, lineterminator='\n')
+      #Matrix = np.matrix(self.ME)
+      #for line in Matrix:
+      #  writer.writerows(line)
+
+
+
       Output.write(" The mass matrix of element number ")
       Output.write(str(IEl))
       Output.write("\n")
-      #Matrix = np.matrix(self.ME)
-      #for line in Matrix:
-      #  np.savetxt(Output, line, fmt='%10.5f', delimiter='   ')
       for ii in range(NEqEl):
         for jj in range(NEqEl):
-          Output.write(str(self.ME[ii][jj]))    
+          Output.write("{:9.6f}".format(self.ME[ii][jj] ))
           Output.write("  ")
         Output.write("\n")
       Output.write("\n")
@@ -188,12 +195,9 @@ class Compute_Class:
 
     Output.write(" Global mass matrix")
     Output.write("\n")
-    #Matrix = np.matrix(self.M_Global)
-    #for line in Matrix:
-    #  np.savetxt(Output, line, fmt='%10.5f', delimiter='\t')
     for ii in range(Input.NEq):
       for jj in range(Input.NEq):
-        Output.write(str(self.M_Global[ii][jj]))    
+        Output.write("{:9.6f}".format(self.M_Global[ii][jj] ))
         Output.write("  ")
       Output.write("\n")
     Output.write("\n")

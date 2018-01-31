@@ -1,5 +1,5 @@
 Input file name:
-Ex_2.txt
+Ex_3.txt
 
 Input directory: (These directions are for the Linux machine)
 /h1/babak/Documents/Git/Mass_Matrix/input
