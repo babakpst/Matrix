@@ -1,7 +1,7 @@
 ! The Input file for the following example
 !
 1          ! NEl: Total Number of Elements
-1          ! El_Type: The Element type, 1: for quad - 2: for triangle
+1          ! El_Type: The Element type, 1: for first-order quad - 2: for first-order triangle- 3: for second-order quad - 2: for second-order triangle
 1          ! NInt_Type: Type of integration point 1: for quad - 2: for triangle
 3          ! NInt
 2          ! NDim

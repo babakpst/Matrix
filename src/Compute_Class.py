@@ -53,6 +53,7 @@ class Compute_Class:
                 NEqEl,                # Integer Variables
                 ND,                   # Integer Arrays
                 ME, M_Global          # Real Arrays  
+                KE, K_Global          # Real Arrays  
                 ):
 
     for ll in range(NEqEl):
@@ -63,6 +64,7 @@ class Compute_Class:
         if ii == -1 or jj == -1:
           continue
         M_Global[ii][jj] += ME[ll][nn]
+        K_Global[ii][jj] += KE[ll][nn]
 
 
 
@@ -151,6 +153,7 @@ class Compute_Class:
 
     print("{} {:d}".format(" Total number of equations are: ", Input.NEq))
     self.M_Global  = np.zeros((Input.NEq, Input.NEq), dtype=np.float64)      # Global mass matrix
+    self.K_Global  = np.zeros((Input.NEq, Input.NEq), dtype=np.float64)      # Global mass matrix
 
     # Extracting Integration points
     Parameters = Parameters_Class.Parameters_Class(Input.NInt, Input.NInt_Type)
@@ -178,20 +181,35 @@ class Compute_Class:
       self.ME[:][:]  = 0.0
 
       # Choosing the right function
-      if Input.El_Type == 1: # Quad elements
+      if Input.El_Type == 1: # Quad elements- first order
         Mass.Mass_2D_4N_def(                               
           IEl, Input.NNode, Input.NDim, Input.NInt, NEqEl,# ! Integer Variables
           Input.Rho, Input.Lambda, Input.Mu,              # ! Real Variables
-          self.XT, self.ME, self.KE, self.M_Sum,          # ! Real Arrays
+          self.XT, self.ME, self.KE, self.M_Sum, self.KE, # ! Real Arrays
           self.XINT, self.WINT
         )
-      elif Input.El_Type == 2: # Triangle element
+      elif Input.El_Type == 2: # Triangle element- first order
           Mass.Mass_2D_3N_def(
             IEl, Input.NNode, Input.NDim, Input.NInt, NEqEl,# ! Integer Variables
-            Input.Rho,                                      # ! Real Variables
-            self.XT, self.ME, self.M_Sum,                   # ! Real Arrays
+            Input.Rho, Input.Lambda, Input.Mu,              # ! Real Variables
+            self.XT, self.ME, self.M_Sum, self.KE,          # ! Real Arrays
             self.XINT, self.WINT            
             )
+      elif Input.El_Type == 3: # Quad elements- second order
+        Mass.Mass_2D_4N_def(                               
+          IEl, Input.NNode, Input.NDim, Input.NInt, NEqEl,# ! Integer Variables
+          Input.Rho, Input.Lambda, Input.Mu,              # ! Real Variables
+          self.XT, self.ME, self.KE, self.M_Sum, self.KE, # ! Real Arrays
+          self.XINT, self.WINT
+        )
+      elif Input.El_Type == 4: # Triangle element- second order
+          Mass.Mass_2D_6N_def(
+            IEl, Input.NNode, Input.NDim, Input.NInt, NEqEl,# ! Integer Variables
+            Input.Rho, Input.Lambda, Input.Mu,              # ! Real Variables
+            self.XT, self.ME, self.M_Sum, self.KE,          # ! Real Arrays
+            self.XINT, self.WINT            
+            )
+
 
       # Writing the element mass matrix in the file
       Output.write(" The mass matrix of element number: ")
@@ -206,7 +224,19 @@ class Compute_Class:
         Output.write("\n")
       Output.write("\n")
       Output.write("\n")
-        
+
+      # Writing the element mass matrix in the file
+      Output.write(" The stiffness matrix of element number: ")
+      Output.write(str(IEl))
+      Output.write("\n")
+      for ii in range(NEqEl):
+        for jj in range(NEqEl):
+          Output.write("{:9.6f}".format(self.KE[ii][jj] ))
+          Output.write("  ")
+        Output.write("\n")
+      Output.write("\n")
+      Output.write("\n")
+
       # Form the ND array for assembling - This array indicates how to assemble the element 
       # matrix in the global matrix
       for ii in range(Input.NNode):
@@ -218,6 +248,7 @@ class Compute_Class:
                 NEqEl,                # Integer Variables
                 self.ND,                   # Integer Arrays
                 self.ME, self.M_Global     # Real Arrays  
+                self.KE, self.K_Global     # Real Arrays  
                 )
 
 
@@ -232,7 +263,21 @@ class Compute_Class:
     Output.write("\n")
     Output.write("\n")
 
+    # Writing the global matrix on the file
+    Output.write(" Global stiffness matrix")
+    Output.write("\n")
+    for ii in range(Input.NEq):
+      for jj in range(Input.NEq):
+        Output.write("{:9.6f}".format(self.K_Global[ii][jj] ))
+        Output.write("  ")
+      Output.write("\n")
+    Output.write("\n")
+    Output.write("\n")
+
     del Output
     del Input
-
+    del self.ME
+    del self.KE
+    del self.M_Global
+    del self.K_Global
 

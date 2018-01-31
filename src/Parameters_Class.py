@@ -161,7 +161,7 @@ class Parameters_Class:
 
 class Shape_Function_Class:
 
-    # Shape function of the quad element
+    # Shape function of the first-order quad element
     def Shape_Func_2D_4N_def(self, FN, X1, X2):
 
         FN[0] = ( 1.0 + X1 ) * ( 1.0 - X2 ) * 0.25
@@ -169,7 +169,7 @@ class Shape_Function_Class:
         FN[2] = ( 1.0 - X1 ) * ( 1.0 + X2 ) * 0.25
         FN[3] = ( 1.0 - X1 ) * ( 1.0 - X2 ) * 0.25
 
-    # Derivative of shape functions for the quad element
+    # Derivative of shape functions for the first-order quad element
     def Derivative_Shape_Func_2D_4N_def(self, DFXI, X1, X2):
 
         DFXI[0][0] = + ( 1.0 - X2 ) * 0.25
@@ -181,14 +181,14 @@ class Shape_Function_Class:
         DFXI[3][0] = - ( 1.0 - X2 ) * 0.25
         DFXI[3][1] = - ( 1.0 - X1 ) * 0.25
 
-    # Shape functions of the triangle element
+    # Shape functions of the first-order triangle element
     def Shape_Func_2D_3N_def(self, FN, X1, X2):
 
         FN[0] = 1.0 - X1 - X2
         FN[1] = X1
         FN[2] = X2
 
-    # Derivative of the shape function of the triangle
+    # Derivative of the shape function of the first-order triangle
     def Derivative_Shape_Func_2D_3N_def(self, DFXI, X1, X2):
 
         DFXI[0][0] = -1.0
@@ -198,5 +198,66 @@ class Shape_Function_Class:
         DFXI[2][0] =  0.0
         DFXI[2][1] = +1.0
 
+    # Shape functions of the second-order triangle element
+    def Shape_Func_2D_3N_def(self, FN, r, s):
 
+        FN[0] = ( 1.0 - r - s ) * ( 1.0 - 2.0 * r - 2.0 * s ) 
+        FN[1] = r * ( 2.0 * r - 1.0 )
+        FN[2] = s * ( 2.0 * s - 1.0 ) 
+        FN[3] = 4.0 * r * ( 1.0 - r - s )
+        FN[4] = 4.0 * r * s
+        FN[5] = 4.0 * s * ( 1.0 - r - s )
+
+
+    # Derivative of the shape function of the second-order triangle
+    def Derivative_Shape_Func_2D_6N_def(self, DFXI, r, s):
+
+        DFXI[0][0] = - 3.0 + 4.0 * r + 4.0 * s
+        DFXI[0][1] = - 3.0 + 4.0 * r + 4.0 * s
+        DFXI[1][0] = + 4.0 * r - 1.0
+        DFXI[1][1] =   0.0
+        DFXI[2][0] =   0.0
+        DFXI[2][1] = + 4.0 * s - 1.0
+        DFXI[3][0] = + 4.0 - 8.0 * r - 4.0 * s
+        DFXI[3][1] = - 4.0 * r
+        DFXI[4][0] = + 4.0 * s
+        DFXI[4][1] = + 4.0 * r
+        DFXI[5][0] = - 4.0 * s
+        DFXI[5][1] = + 4.0 - 4.0 * r - 8.0 * s
+
+
+    # Shape function of the second-order quad element
+    def Shape_Func_2D_8N_def(self, FN, X1, X2):
+
+        Funct[0] = ( 1.0 + X1 ) * ( 1.0 - X2 ) * ( -1.0 + X1 - X2 ) * 0.25 ; 
+        Funct[1] = ( 1.0 + X1 ) * ( 1.0 + X2 ) * ( -1.0 + X1 + X2 ) * 0.25 ; 
+        Funct[2] = ( 1.0 - X1 ) * ( 1.0 + X2 ) * ( -1.0 - X1 + X2 ) * 0.25 ; 
+        Funct[3] = ( 1.0 - X1 ) * ( 1.0 - X2 ) * ( -1.0 - X1 - X2 ) * 0.25 ; 
+
+        Funct[4] = ( 1.0 - X2 * X2 ) * ( 1.0 + X1 ) * 0.5 ; 
+        Funct[5] = ( 1.0 - X1 * X1 ) * ( 1.0 + X2 ) * 0.5 ; 
+        Funct[6] = ( 1.0 - X2 * X2 ) * ( 1.0 - X1 ) * 0.5 ; 
+        Funct[7] = ( 1.0 - X1 * X1 ) * ( 1.0 - X2 ) * 0.5 ; 
+
+
+    # Derivative of shape functions for the second-order quad element
+    def Derivative_Shape_Func_2D_8N_def(self, DFXI, X1, X2):
         
+        DFXI[0][0] =  ( 1.0 - X2 ) * (   2.0 * X1 - X2 ) * 0.25 ; 
+        DFXI[0][1] =  ( 1.0 + X1 ) * ( - X1 + 2.0 * X2 ) * 0.25 ; 
+        DFXI[1][0] =  ( 1.0 + X2 ) * (   2.0 * X1 + X2 ) * 0.25 ; 
+        DFXI[1][1] =  ( 1.0 + X1 ) * (   X1 + 2.0 * X2 ) * 0.25 ; 
+        DFXI[2][0] =  ( 1.0 + X2 ) * (   2.0 * X1 - X2 ) * 0.25 ; 
+        DFXI[2][1] =  ( 1.0 - X1 ) * ( - X1 + 2.0 * X2 ) * 0.25 ; 
+        DFXI[3][0] =  ( 1.0 - X2 ) * (   2.0 * X1 + X2 ) * 0.25 ; 
+        DFXI[3][1] =  ( 1.0 - X1 ) * (   X1 + 2.0 * X2 ) * 0.25 ; 
+
+        DFXI[4][0] =  ( 1.0 - X2 * X2 ) * 0.5 ; 
+        DFXI[4][1] = -( 1.0 + X1 ) * X2 ;
+        DFXI[5][0] = -( 1.0 + X2 ) * X1 ;
+        DFXI[5][1] =  ( 1.0 - X1 * X1 ) * 0.5 ; 
+        DFXI[6][0] = -( 1.0 - X2 * X2 ) * 0.5 ; 
+        DFXI[6][1] = -( 1.0 - X1 ) * X2 ;
+        DFXI[7][0] = -( 1.0 - X2 ) * X1 ;
+        DFXI[7][1] = -( 1.0 - X1 * X1 ) * 0.5 ; 
+
