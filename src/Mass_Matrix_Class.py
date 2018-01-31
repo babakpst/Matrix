@@ -85,9 +85,9 @@ class Mass_Matrix_Class:
 #
 ####################################################################################################
     def Mass_2D_4N_def(self,
-                   IEL, NNode, NDim, NInt,                   #  Integer Variables
+                   IEl, NNode, NDim, NInt, NEqEl,            #  Integer Variables
                    Rho,                                      #  Real Variables
-                   XT, ME,                                   #  Real Arrays
+                   XT, ME, M_Sum,                            #  Real Arrays
                    XINT, WINT                                #  Type 
                    ):
 
@@ -152,9 +152,11 @@ class Mass_Matrix_Class:
                     for JNode in range(NNode):
                       ME[IDim*NNode+INode][IDim*NNode+JNode] += Rho * Phi_Phi_T[INode][JNode]
 
-
-
-
+        # Finding the sum of the entries
+        for INode in range(NEqEl):
+            for JNode in range(NEqEl):
+                print(M_Sum[IEl],ME[INode][JNode])
+                M_Sum[IEl] += ME[INode][JNode]
 
 ####################################################################################################
 # Purpose: This funciton computes the mass matrix of a quad element: 2D 4 noded.
@@ -186,9 +188,9 @@ class Mass_Matrix_Class:
 ####################################################################################################
 
     def Mass_2D_3N_def(self,
-            IEL, NNode, NDim, NInt,            # Integer Variables
+            IEl, NNode, NDim, NInt,  NEqEl,    # Integer Variables
             Rho,                               # Real Variables
-            XT, ME,                            # Real Arrays
+            XT, ME, M_Sum,                     # Real Arrays
             XINT, WINT                         #  Type 
             ):
 
@@ -248,5 +250,9 @@ class Mass_Matrix_Class:
                 for JNode in range(NNode):
                   ME[IDim*NNode+INode][IDim*NNode+JNode] += Rho * Phi_Phi_T[INode][JNode]
 
-
+        # Finding the sum of the entries
+        for INode in range(NEqEl):
+            for JNode in range(NEqEl):
+                print(M_Sum[IEl],ME[INode][JNode])
+                M_Sum[IEl] += ME[INode][JNode]
 

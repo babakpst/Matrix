@@ -95,11 +95,12 @@ class Compute_Class:
     #self.NEq = 0    
 
     # Define Arrays ============================================================================
-    self.XYZ  = np.zeros((Input.NPoints, Input.NDim),  dtype=np.float64)  # Coordinates of nodes
+    self.XYZ  = np.zeros((Input.NPoints, Input.NDim), dtype=np.float64)  # Coordinates of nodes
     self.Conn = np.zeros((Input.NNode, Input.NEl),    dtype=np.int32)     # Element's Connectivity
     self.ID   = np.zeros((Input.NPoints, Input.NDOF), dtype=np.int32)     # Constraints
 
     self.ME   = np.zeros((NEqEl, NEqEl), dtype=np.float64)  # Element mass matrix
+    self.M_Sum= np.zeros(Input.NEl, dtype=np.float64)             # Holds the total mass of each element
     self.ND   = np.zeros(NEqEl, dtype=np.int32)             # Nodal connectivity
 
     if Input.NInt_Type == 1:
@@ -145,16 +146,16 @@ class Compute_Class:
       # Choosing the right function
       if Input.El_Type == 1: # Quad elements
         Mass.Mass_2D_4N_def(                               
-          IEl, Input.NNode, Input.NDim, Input.NInt,       # ! Integer Variables
+          IEl, Input.NNode, Input.NDim, Input.NInt, NEqEl,# ! Integer Variables
           Input.Rho,                                      # ! Real Variables
-          self.XT, self.ME,                               # ! Real Arrays
+          self.XT, self.ME, self.M_Sum,                   # ! Real Arrays
           self.XINT, self.WINT
         )
       elif Input.El_Type == 2: # Triangle element
           Mass.Mass_2D_3N_def(
-            IEl, Input.NNode, Input.NDim, Input.NInt,       # ! Integer Variables
+            IEl, Input.NNode, Input.NDim, Input.NInt, NEqEl,# ! Integer Variables
             Input.Rho,                                      # ! Real Variables
-            self.XT, self.ME,                               # ! Real Arrays
+            self.XT, self.ME, self.M_Sum,                   # ! Real Arrays
             self.XINT, self.WINT            
             )
 
@@ -166,8 +167,10 @@ class Compute_Class:
 
 
 
-      Output.write(" The mass matrix of element number ")
+      Output.write(" The mass matrix of element number: ")
       Output.write(str(IEl))
+      Output.write("- The total mass is: ")
+      Output.write(str(self.M_Sum[IEl]))
       Output.write("\n")
       for ii in range(NEqEl):
         for jj in range(NEqEl):
