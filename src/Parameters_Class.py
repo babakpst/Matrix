@@ -1,16 +1,30 @@
 
-#####################################################################
-# Code developed by: Dr. Babak Poursartip
-# Supervised by:     Dr. Clint Dawson
+
+####################################################################################################
+# Purpose: This class contains the integration points/weights.
+#
+# Developed by: Babak Poursartip
+# 
 # The Institute for Computational Engineering and Sciences (ICES)
 # The University of Texas at Austin
 #
-# Start date:    01/22/2018
-# Latest update: 01/22/2018
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/22/2018 - Class initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
+# V0.2: 01/31/2018 - General modifications
 #
-# Comment: This class specifies the shape functions
+# File version $Id
 #
-#####################################################################
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#  . . . . . . . . . . . . . . . . Variables . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+#
+#  . . . . . . . . . . . . . . . . Arrays  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+# -XINT[Coe*NInt] (float64): Integration points
+# -WINT[Coe*NInt] (float64): Integration weight
+#
+####################################################################################################
 
 class Parameters_Class:
 
@@ -119,6 +133,31 @@ class Parameters_Class:
             print("{:^80}".format(" Error in the type of the integration points. Enter a number btw 1 to 2."))
             sys.exit()
 
+####################################################################################################
+# Purpose: This class contains the shape functions and their derivatives,
+#
+# Developed by: Babak Poursartip
+# 
+# The Institute for Computational Engineering and Sciences (ICES)
+# The University of Texas at Austin
+#
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/22/2018 - Class initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
+# V0.2: 01/31/2018 - General modifications
+#
+# File version $Id
+#
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#  . . . . . . . . . . . . . . . . Variables . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+#
+#  . . . . . . . . . . . . . . . . Arrays  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+# -FN[NNode] (float64): shape functions in the local coordinates
+# -DFXI[Coe*NInt] (float64): The derivative of shape functions in the local coordinates
+#
+####################################################################################################
 
 class Shape_Function_Class:
 

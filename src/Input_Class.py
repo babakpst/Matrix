@@ -1,23 +1,57 @@
 
 
-#####################################################################
-# Code developed by: Dr. Babak Poursartip
-# Supervised by:     Dr. Clint Dawson
+####################################################################################################
+# Purpose: This class will take care of all readings.
+#
+# Developed by: Babak Poursartip
+# 
 # The Institute for Computational Engineering and Sciences (ICES)
 # The University of Texas at Austin
 #
-# Start date:    01/22/2018
-# Latest update: 01/22/2018
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/22/2018 - Class initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
+# V0.2: 01/31/2018 - General modifications
 #
-# Comment: This class specifies the shape functions
+# File version $Id
 #
-#####################################################################
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#  . . . . . . . . . . . . . . . . Variables . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+#
+####################################################################################################
 
 class Input_Class:
 
     def __int__(self):
         pass
 
+####################################################################################################
+# Purpose: This reads the input file and directories from an address file.
+#
+# Developed by: Babak Poursartip
+# 
+# The Institute for Computational Engineering and Sciences (ICES)
+# The University of Texas at Austin
+#
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/22/2018 - Class initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
+# V0.2: 01/31/2018 - General modifications
+#
+# File version $Id
+#
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#  . . . . . . . . . . . . . . . . Variables . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+# -Model: the model name
+# -InputFileName: input directory + the model (variables)
+# -DataFileName: input directory + the model (arrays)
+# -Output_Dir: output directory + .dat file that contains the matrices
+#
+####################################################################################################
     def Read_Data_def(self):
 
         # Import built-in libraries ================================================================
@@ -43,8 +77,8 @@ class Input_Class:
         # Create Input/Output directories
         self.Model = File
         self.InputFileName = os.path.join(Input_Dir, File) 
-        self.Output_Dir = os.path.join(Output_Dir, os.path.splitext(File)[0])
         self.DataFileName = os.path.join(Input_Dir, (os.path.splitext(File)[0])+".dat")
+        self.Output_Dir = os.path.join(Output_Dir, os.path.splitext(File)[0])
 
         print(" {0} {1}".format("The input file name is:", self.InputFileName))
         print(" {0} {1}".format(" The output path is:", self.Output_Dir))
@@ -74,7 +108,28 @@ class Input_Class:
         del Input_Dir
 
 
-
+####################################################################################################
+# Purpose: This reads the initial data from the input file to later form the required arrays.
+#
+# Developed by: Babak Poursartip
+# 
+# The Institute for Computational Engineering and Sciences (ICES)
+# The University of Texas at Austin
+#
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/22/2018 - Class initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
+# V0.2: 01/31/2018 - General modifications
+#
+# File version $Id
+#
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#  . . . . . . . . . . . . . . . . Variables . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+# See the Compute_Class to find the definition of variables.
+#
+####################################################################################################
     def Read_Input_def(self):
 
         # Import built-in libraries ================================================================
@@ -138,7 +193,27 @@ class Input_Class:
 
         del File_Input
 
-
+####################################################################################################
+# Purpose: This function reads the arrays includign coordinates, connectivities, etc.
+#
+# Developed by: Babak Poursartip
+# 
+# The Institute for Computational Engineering and Sciences (ICES)
+# The University of Texas at Austin
+#
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/22/2018 - Class initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
+# V0.2: 01/31/2018 - General modifications
+#
+# File version $Id
+#
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#  . . . . . . . . . . . . . . . . Variables . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+#
+####################################################################################################
     def Read_Arrays_def(self, XYZ, Conn, ID):
 
         # Import built-in libraries ================================================================

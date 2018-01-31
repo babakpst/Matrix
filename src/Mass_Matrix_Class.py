@@ -1,16 +1,27 @@
 
-#####################################################################
-# Code developed by: Dr. Babak Poursartip
-# Supervised by:     Dr. Clint Dawson
+####################################################################################################
+# Purpose: This class contains the element matrix computations.
+#
+# Developed by: Babak Poursartip
+# 
 # The Institute for Computational Engineering and Sciences (ICES)
 # The University of Texas at Austin
 #
-# Start date:    01/22/2018
-# Latest update: 01/22/2018
+# ================================ V E R S I O N ===================================================
+# V0.0: 01/22/2018 - Class initiation.
+# V0.1: 01/29/2018 - Function compiled successfully for the first time.
+# V0.2: 01/31/2018 - General modifications
 #
-# Comment: This class specifies the shape functions
+# File version $Id
 #
-#####################################################################
+#
+# ================================ L O C A L   V A R I A B L E S ===================================
+# (Refer to the main code to see the list of imported variables)
+#  . . . . . . . . . . . . . . . . Variables . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+#
+#  . . . . . . . . . . . . . . . . Arrays  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+#
+####################################################################################################
 
 class Mass_Matrix_Class:
 
