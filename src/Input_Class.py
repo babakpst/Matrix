@@ -57,6 +57,7 @@ class Input_Class:
         # Import built-in libraries ================================================================
         import os
         import shutil
+        import sys
 
         # Input data ==========================================================
         # Read the name of the input file from address file
@@ -89,6 +90,15 @@ class Input_Class:
             print("{}".format(" The input file does not exist!"))
             print("{}".format(" Please double check the input file or dirctory"))
             print("{}".format(" Simulation terminates"))
+            sys.exit(" INPUT FILE ERROR")
+
+        if not os.path.exists(self.DataFileName):
+            print("{}".format("       FATAL ERROR   "))
+            print("{}".format(" The array file does not exist!"))
+            print("{}".format(" Please double check the input file or dirctory"))
+            print("{}".format(" Simulation terminates"))
+            sys.exit(" Array FILE ERROR")
+
 
         # Create or Clean the output directory
         if os.path.exists(self.Output_Dir):
@@ -188,10 +198,21 @@ class Input_Class:
 
         Temp = File_Input.readline().rstrip("\n")
         Temp = Temp.split()
+        self.Lambda = float(Temp[0])
+        print("{:40} {:f}".format(" The density of the material is:", self.Lambda))
+
+        Temp = File_Input.readline().rstrip("\n")
+        Temp = Temp.split()
+        self.Mu = float(Temp[0])
+        print("{:40} {:f}".format(" The density of the material is:", self.Mu))
+
+        Temp = File_Input.readline().rstrip("\n")
+        Temp = Temp.split()
         self.NDOF = int(Temp[0])
         print("{:40} {:f}".format(" Degrees of freedom of each node:", self.NDOF))
 
         del File_Input
+        del Temp
 
 ####################################################################################################
 # Purpose: This function reads the arrays includign coordinates, connectivities, etc.
@@ -272,6 +293,8 @@ class Input_Class:
 
         self.NEq += 1        
 
+        del File_Input
+        del Temp
 
 
     

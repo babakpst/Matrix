@@ -8,4 +8,6 @@
 4          ! NNode
 4          ! Total number of nodes
 1.0        ! Density
+1.0        ! Lambda
+1.0        ! Mu
 2          ! NDOF: Degrees of freedom of each node
