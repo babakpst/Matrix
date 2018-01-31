@@ -196,7 +196,6 @@ class Input_Class:
                     ID[INode][IDim] = -1
 
         self.NEq += 1        
-        print("{} {:d}".format(" Total number of equations: ",self.NEq))
 
 
 

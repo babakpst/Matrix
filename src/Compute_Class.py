@@ -101,7 +101,12 @@ class Compute_Class:
     self.ME   = np.zeros((NEqEl, NEqEl), dtype=np.float64)  # Element mass matrix
     self.ND   = np.zeros(NEqEl, dtype=np.int32)             # Nodal connectivity
 
-    self.XINT = np.zeros(Input.NInt, dtype=np.float64) # Integration points
+    if Input.NInt_Type == 1:
+      Coe = 1
+    elif Input.NInt_Type == 2:
+      Coe = 2
+
+    self.XINT = np.zeros(Coe*Input.NInt, dtype=np.float64) # Integration points
     self.WINT = np.zeros(Input.NInt, dtype=np.float64) # Weight coefficients for num. integration
     
     self.XT   = np.zeros((Input.NDim, Input.NNode), dtype=np.float64) # Local coordinates of each element
@@ -121,7 +126,7 @@ class Compute_Class:
 
     # Output folder
     Output_File = os.path.join(Input.Output_Dir,("Mass_"+Input.Model)) 
-    Output = open(Output_File,"w")
+    Output = open(Output_File,'w')
 
     for IEl in range(Input.NEl):
 
@@ -144,14 +149,24 @@ class Compute_Class:
           self.XINT, self.WINT
         )
       elif Input.El_Type == 2: # Triangle element
-          Mass.Mass_2D_3N_def()
+          Mass.Mass_2D_3N_def(
+            IEl, Input.NNode, Input.NDim, Input.NInt,       # ! Integer Variables
+            Input.Rho,                                      # ! Real Variables
+            self.XT, self.ME,                               # ! Real Arrays
+            self.XINT, self.WINT            
+            )
 
       Output.write(" The mass matrix of element number ")
       Output.write(str(IEl))
       Output.write("\n")
-      Matrix = np.matrix(self.ME)
-      for line in Matrix:
-        np.savetxt(Output, line, fmt="%.6f")
+      #Matrix = np.matrix(self.ME)
+      #for line in Matrix:
+      #  np.savetxt(Output, line, fmt='%10.5f', delimiter='   ')
+      for ii in range(NEqEl):
+        for jj in range(NEqEl):
+          Output.write(str(self.ME[ii][jj]))    
+          Output.write("  ")
+        Output.write("\n")
       Output.write("\n")
       Output.write("\n")
         
@@ -173,9 +188,14 @@ class Compute_Class:
 
     Output.write(" Global mass matrix")
     Output.write("\n")
-    Matrix = np.matrix(self.M_Global)
-    for line in Matrix:
-      np.savetxt(Output, line, fmt="%.6f")
+    #Matrix = np.matrix(self.M_Global)
+    #for line in Matrix:
+    #  np.savetxt(Output, line, fmt='%10.5f', delimiter='\t')
+    for ii in range(Input.NEq):
+      for jj in range(Input.NEq):
+        Output.write(str(self.M_Global[ii][jj]))    
+        Output.write("  ")
+      Output.write("\n")
     Output.write("\n")
     Output.write("\n")
 

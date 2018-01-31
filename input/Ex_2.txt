@@ -5,7 +5,7 @@
 2          ! NInt_Type: Type of integration point 1: for quad - 2: for triangle
 3          ! NInt
 2          ! NDim
-4          ! NNode
+3          ! NNode
 4          ! Total number of nodes
 1.0        ! Density
 2          ! NDOF: Degrees of freedom of each node
