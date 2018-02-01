@@ -52,7 +52,7 @@ class Compute_Class:
   def Assemble (self,                
                 NEqEl,                # Integer Variables
                 ND,                   # Integer Arrays
-                ME, M_Global          # Real Arrays  
+                ME, M_Global,         # Real Arrays  
                 KE, K_Global          # Real Arrays  
                 ):
 
@@ -185,7 +185,7 @@ class Compute_Class:
         Mass.Mass_2D_4N_def(                               
           IEl, Input.NNode, Input.NDim, Input.NInt, NEqEl,# ! Integer Variables
           Input.Rho, Input.Lambda, Input.Mu,              # ! Real Variables
-          self.XT, self.ME, self.KE, self.M_Sum, self.KE, # ! Real Arrays
+          self.XT, self.ME, self.M_Sum, self.KE,          # ! Real Arrays
           self.XINT, self.WINT
         )
       elif Input.El_Type == 2: # Triangle element- first order
@@ -196,10 +196,10 @@ class Compute_Class:
             self.XINT, self.WINT            
             )
       elif Input.El_Type == 3: # Quad elements- second order
-        Mass.Mass_2D_4N_def(                               
+        Mass.Mass_2D_8N_def(                               
           IEl, Input.NNode, Input.NDim, Input.NInt, NEqEl,# ! Integer Variables
           Input.Rho, Input.Lambda, Input.Mu,              # ! Real Variables
-          self.XT, self.ME, self.KE, self.M_Sum, self.KE, # ! Real Arrays
+          self.XT, self.ME, self.M_Sum, self.KE,          # ! Real Arrays
           self.XINT, self.WINT
         )
       elif Input.El_Type == 4: # Triangle element- second order
@@ -243,11 +243,14 @@ class Compute_Class:
         for jj in range(Input.NDOF):
           self.ND[(jj-1) * Input.NNode + ii ] = self.ID[self.Conn[ii][IEl]][jj]
 
+      print("ND: ", self.ND)
+      print("ID: ", self.ID)
+
       # Assemgble the local mass matrix in the global mass matrix
       self.Assemble(                
                 NEqEl,                # Integer Variables
                 self.ND,                   # Integer Arrays
-                self.ME, self.M_Global     # Real Arrays  
+                self.ME, self.M_Global,    # Real Arrays  
                 self.KE, self.K_Global     # Real Arrays  
                 )
 

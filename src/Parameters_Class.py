@@ -199,7 +199,7 @@ class Shape_Function_Class:
         DFXI[2][1] = +1.0
 
     # Shape functions of the second-order triangle element
-    def Shape_Func_2D_3N_def(self, FN, r, s):
+    def Shape_Func_2D_6N_def(self, FN, r, s):
 
         FN[0] = ( 1.0 - r - s ) * ( 1.0 - 2.0 * r - 2.0 * s ) 
         FN[1] = r * ( 2.0 * r - 1.0 )
@@ -229,15 +229,15 @@ class Shape_Function_Class:
     # Shape function of the second-order quad element
     def Shape_Func_2D_8N_def(self, FN, X1, X2):
 
-        Funct[0] = ( 1.0 + X1 ) * ( 1.0 - X2 ) * ( -1.0 + X1 - X2 ) * 0.25 ; 
-        Funct[1] = ( 1.0 + X1 ) * ( 1.0 + X2 ) * ( -1.0 + X1 + X2 ) * 0.25 ; 
-        Funct[2] = ( 1.0 - X1 ) * ( 1.0 + X2 ) * ( -1.0 - X1 + X2 ) * 0.25 ; 
-        Funct[3] = ( 1.0 - X1 ) * ( 1.0 - X2 ) * ( -1.0 - X1 - X2 ) * 0.25 ; 
+        FN[0] = ( 1.0 + X1 ) * ( 1.0 - X2 ) * ( -1.0 + X1 - X2 ) * 0.25 ; 
+        FN[1] = ( 1.0 + X1 ) * ( 1.0 + X2 ) * ( -1.0 + X1 + X2 ) * 0.25 ; 
+        FN[2] = ( 1.0 - X1 ) * ( 1.0 + X2 ) * ( -1.0 - X1 + X2 ) * 0.25 ; 
+        FN[3] = ( 1.0 - X1 ) * ( 1.0 - X2 ) * ( -1.0 - X1 - X2 ) * 0.25 ; 
 
-        Funct[4] = ( 1.0 - X2 * X2 ) * ( 1.0 + X1 ) * 0.5 ; 
-        Funct[5] = ( 1.0 - X1 * X1 ) * ( 1.0 + X2 ) * 0.5 ; 
-        Funct[6] = ( 1.0 - X2 * X2 ) * ( 1.0 - X1 ) * 0.5 ; 
-        Funct[7] = ( 1.0 - X1 * X1 ) * ( 1.0 - X2 ) * 0.5 ; 
+        FN[4] = ( 1.0 - X2 * X2 ) * ( 1.0 + X1 ) * 0.5 ; 
+        FN[5] = ( 1.0 - X1 * X1 ) * ( 1.0 + X2 ) * 0.5 ; 
+        FN[6] = ( 1.0 - X2 * X2 ) * ( 1.0 - X1 ) * 0.5 ; 
+        FN[7] = ( 1.0 - X1 * X1 ) * ( 1.0 - X2 ) * 0.5 ; 
 
 
     # Derivative of shape functions for the second-order quad element

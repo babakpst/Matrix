@@ -97,7 +97,7 @@ class Mass_Matrix_Class:
 ####################################################################################################
     def Mass_2D_4N_def(self,
                    IEl, NNode, NDim, NInt, NEqEl,            #  Integer Variables
-                   Rho,  Input.Lambda, Input.Mu,             #  Real Variables
+                   Rho,  Lambda, Mu,                         #  Real Variables
                    XT, ME, M_Sum, KE,                        #  Real Arrays
                    XINT, WINT                                #  Type 
                    ):
@@ -160,6 +160,10 @@ class Mass_Matrix_Class:
                 for I in range(NNode):
                     for J in range(NNode):
                         Phi_Phi_T[I][J] = FN[I] * FN[J] * FAC
+                        PhiX_PhiX_T[I][J] = DFX[I][0] * DFX[J][0] * FAC
+                        PhiY_PhiY_T[I][J] = DFX[I][1] * DFX[J][1] * FAC
+                        PhiX_PhiY_T[I][J] = DFX[I][0] * DFX[J][1] * FAC
+                        PhiY_PhiX_T[I][J] = DFX[I][1] * DFX[J][0] * FAC
 
                 # Element mass matrix <Modify>
                 for IDim in range(NDim):
@@ -210,7 +214,7 @@ class Mass_Matrix_Class:
 
     def Mass_2D_3N_def(self,
             IEl, NNode, NDim, NInt,  NEqEl,    # Integer Variables
-            Rho,  Input.Lambda, Input.Mu,      # Real Variables
+            Rho,  Lambda, Mu,                  # Real Variables
             XT, ME, M_Sum, KE,                 # Real Arrays
             XINT, WINT                         #  Type 
             ):
@@ -268,10 +272,10 @@ class Mass_Matrix_Class:
             for I in range(NNode):
                 for J in range(NNode):
                     Phi_Phi_T[I][J] = FN[I] * FN[J] * FAC
-                    PhiX_PhiX_T[I][J] = DFX[I][1] * DFX[J][1] * FAC ;
-                    PhiY_PhiY_T[I][J] = DFX[I][2] * DFX[J][2] * FAC ;
-                    PhiX_PhiY_T[I][J] = DFX[I][1] * DFX[J][2] * FAC ;
-                    PhiY_PhiX_T[I][J] = DFX[I][2] * DFX[J][1] * FAC ;
+                    PhiX_PhiX_T[I][J] = DFX[I][0] * DFX[J][0] * FAC
+                    PhiY_PhiY_T[I][J] = DFX[I][1] * DFX[J][1] * FAC
+                    PhiX_PhiY_T[I][J] = DFX[I][0] * DFX[J][1] * FAC
+                    PhiY_PhiX_T[I][J] = DFX[I][1] * DFX[J][0] * FAC
 
             # Element mass matrix <Modify>
             for IDim in range(NDim):
@@ -322,7 +326,7 @@ class Mass_Matrix_Class:
 ####################################################################################################
     def Mass_2D_8N_def(self,
                    IEl, NNode, NDim, NInt, NEqEl,            #  Integer Variables
-                   Rho, Input.Lambda, Input.Mu,              #  Real Variables
+                   Rho, Lambda, Mu,                          #  Real Variables
                    XT, ME, M_Sum, KE,                        #  Real Arrays
                    XINT, WINT                                #  Type 
                    ):
@@ -381,14 +385,14 @@ class Mass_Matrix_Class:
                 DJI = DJI  / DETJ 
 
                 DFX = self.matrixmult_def(DFXI,DJI) 
-
+                print("FN:", FN)
                 for I in range(NNode):
                     for J in range(NNode):
                         Phi_Phi_T[I][J] = FN[I] * FN[J] * FAC
-                        PhiX_PhiX_T[I][J] = DFX[I][1] * DFX[J][1] * FAC ;
-                        PhiY_PhiY_T[I][J] = DFX[I][2] * DFX[J][2] * FAC ;
-                        PhiX_PhiY_T[I][J] = DFX[I][1] * DFX[J][2] * FAC ;
-                        PhiY_PhiX_T[I][J] = DFX[I][2] * DFX[J][1] * FAC ;
+                        PhiX_PhiX_T[I][J] = DFX[I][0] * DFX[J][0] * FAC
+                        PhiY_PhiY_T[I][J] = DFX[I][1] * DFX[J][1] * FAC
+                        PhiX_PhiY_T[I][J] = DFX[I][0] * DFX[J][1] * FAC
+                        PhiY_PhiX_T[I][J] = DFX[I][1] * DFX[J][0] * FAC
 
                 # Element mass matrix <Modify>
                 for IDim in range(NDim):
@@ -442,7 +446,7 @@ class Mass_Matrix_Class:
 
     def Mass_2D_6N_def(self,
             IEl, NNode, NDim, NInt,  NEqEl,    # Integer Variables
-            Rho,  Input.Lambda, Input.Mu,      # Real Variables
+            Rho,  Lambda, Mu,                  # Real Variables
             XT, ME, M_Sum, KE,                 # Real Arrays
             XINT, WINT                         #  Type 
             ):
@@ -500,10 +504,10 @@ class Mass_Matrix_Class:
             for I in range(NNode):
                 for J in range(NNode):
                     Phi_Phi_T[I][J] = FN[I] * FN[J] * FAC
-                    PhiX_PhiX_T[I][J] = DFX[I][1] * DFX[J][1] * FAC ;
-                    PhiY_PhiY_T[I][J] = DFX[I][2] * DFX[J][2] * FAC ;
-                    PhiX_PhiY_T[I][J] = DFX[I][1] * DFX[J][2] * FAC ;
-                    PhiY_PhiX_T[I][J] = DFX[I][2] * DFX[J][1] * FAC ;
+                    PhiX_PhiX_T[I][J] = DFX[I][0] * DFX[J][0] * FAC
+                    PhiY_PhiY_T[I][J] = DFX[I][1] * DFX[J][1] * FAC
+                    PhiX_PhiY_T[I][J] = DFX[I][0] * DFX[J][1] * FAC
+                    PhiY_PhiX_T[I][J] = DFX[I][1] * DFX[J][0] * FAC
 
             # Element mass matrix <Modify>
             for IDim in range(NDim):
