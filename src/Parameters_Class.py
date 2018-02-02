@@ -88,8 +88,8 @@ class Parameters_Class:
                 WINT[3] = (322.0+13.0*math.sqrt(70.0))/900.0 # WEIGHTS
                 WINT[4] = (322.0-13.0*math.sqrt(70.0))/900.0 # WEIGHTS
             else:
-                print("{:^80}".format(" Error in the number of integration points. Enter a number btw 1 to 5."))
-                sys.exit()
+                print("{:^80}".format(" Error in the number of integration points. Enter an integration number btw 1 to 5."))
+                sys.exit(" Simulation terminated. See Parameters class")
 
         elif self.NInt_Type == 2: # Integration points for triangle elements
             #Allocate ( GAUSS_POINTS%XINT ( 2_Smll * NInt ), GAUSS_POINTS%WINT ( NInt ) ) ;
@@ -127,10 +127,63 @@ class Parameters_Class:
                 WINT[3] = +25.00 / +48.00 # WEIGHTS
 
             else:
-                print("{:^80}".format(" Error in the number of integration points. Enter a number btw 1 to 5."))
-                sys.exit()
+                print("{:^80}".format(" Error in the number of integration points. Enter 1, 3, or 4 Integrarion point for this type of Integration."))
+                sys.exit(" Simulation terminated. See Parameters class")
+
+        elif self.NInt_Type == 3: # Gauss-Lobatto quadrature  for quadrilateral
+
+            if self.NInt ==  2: 
+                XINT[0] = -1.0  # Abscissae
+                XINT[1] = +1.0  # Abscissae
+
+                WINT[0] = +1.0/2.0  # WEIGHTS
+                WINT[1] = +1.0/2.0  # WEIGHTS
+
+            elif self.NInt ==  3: # polynomial degree 5
+                XINT[0] = -1.0 # ABSCISSAE
+                XINT[1] = 0.00 # ABSCISSAE
+                XINT[2] = +1.00 # ABSCISSAE
+
+                WINT[0] = +1.0/+3.0  # WEIGHTS
+                WINT[1] = +4.0/+3.0  # WEIGHTS
+                WINT[2] = +1.0/+3.0  # WEIGHTS
+            else:
+                print("{:^80}".format(" Error in the number of integration points. Enter 2 or 3 Integrarion points for this type of Integration."))
+                sys.exit(" Simulation terminated. See Parameters class")
+
+
+        elif self.NInt_Type == 4: # Gauss-Lobatto quadrature for triangle elements (spectral triangle quadrature) - 2D Unstructured mesh
+            if self.NInt ==  7: 
+                XINT[0]  = 0.0      # Abscissae
+                XINT[1]  = 1.0      # Abscissae
+                XINT[2]  = 0.0      # Abscissae
+                XINT[3]  = 0.5      # Abscissae
+                XINT[4]  = 0.5      # Abscissae
+                XINT[5]  = 0.0      # Abscissae
+                XINT[6]  = 1.0/3.0  # Abscissae
+
+                XINT[7]  = 0.0      # Abscissae
+                XINT[8]  = 0.0      # Abscissae
+                XINT[9]  = 1.0      # Abscissae
+                XINT[10] = 0.0      # Abscissae
+                XINT[11] = 0.5      # Abscissae
+                XINT[12] = 0.5      # Abscissae
+                XINT[13] = 1.0/3.0  # Abscissae
+
+                WINT[0]  = +1.0 / +40.0  # WEIGHTS
+                WINT[1]  = +1.0 / +40.0  # WEIGHTS
+                WINT[2]  = +1.0 / +40.0  # WEIGHTS
+                WINT[3]  = +1.0 / +15.0  # WEIGHTS
+                WINT[4]  = +1.0 / +15.0  # WEIGHTS
+                WINT[5]  = +1.0 / +15.0  # WEIGHTS
+                WINT[6]  = +9.0 / +40.0  # WEIGHTS
+                
+            else:
+                print("{:^80}".format(" Error in the number of integration points. Enter 7 Integrarion points for this type of Integration."))
+                sys.exit(" Simulation terminated. See Parameters class")
+      
         else: 
-            print("{:^80}".format(" Error in the type of the integration points. Enter a number btw 1 to 2."))
+            print("{:^80}".format(" Error in the type of the integration points. Enter a number btw 1 to 4."))
             sys.exit()
 
 ####################################################################################################

@@ -95,7 +95,7 @@ class Mass_Matrix_Class:
 #
 #
 ####################################################################################################
-    def Mass_2D_4N_def(self,
+    def Mass_2D_4N_def(self, Output_Jac,
                    IEl, NNode, NDim, NInt, NEqEl,            #  Integer Variables
                    Rho,  Lambda, Mu,                         #  Real Variables
                    XT, ME, M_Sum, KE,                        #  Real Arrays
@@ -142,7 +142,20 @@ class Mass_Matrix_Class:
 
                 DJ   = self.matrixmult_def(XT, DFXI)
 
-                print(DJ)
+                Output_Jac.write(" The Jac matrix of element number: ")
+                Output_Jac.write(str(IEl))
+                Output_Jac.write("- at the Integration point: ")
+                Output_Jac.write(str(LX))
+                Output_Jac.write("and: ")
+                Output_Jac.write(str(LY))
+                Output_Jac.write("\n")
+                for ii in range(2):
+                    for jj in range(2):
+                        Output_Jac.write("{:15.6f}".format(DJ[ii][jj] ))
+                        Output_Jac.write("  ")
+                        Output_Jac.write("\n")
+                Output_Jac.write("\n")
+                Output_Jac.write("\n")
 
                 DETJ = DJ[0][0] * DJ[1][1] - DJ[1][0] * DJ[0][1]
                 FAC  = WSTAR * DETJ
@@ -216,7 +229,7 @@ class Mass_Matrix_Class:
 #
 ####################################################################################################
 
-    def Mass_2D_3N_def(self,
+    def Mass_2D_3N_def(self, Output_Jac,
             IEl, NNode, NDim, NInt,  NEqEl,    # Integer Variables
             Rho,  Lambda, Mu,                  # Real Variables
             XT, ME, M_Sum, KE,                 # Real Arrays
@@ -258,7 +271,18 @@ class Mass_Matrix_Class:
 
             DJ   = self.matrixmult_def(XT, DFXI)
 
-            print(DJ)
+            Output_Jac.write(" The Jac matrix of element number: ")
+            Output_Jac.write(str(IEl))
+            Output_Jac.write("- at the Integration point: ")
+            Output_Jac.write(str(ll))
+            Output_Jac.write("\n")
+            for ii in range(2):
+                for jj in range(2):
+                    Output_Jac.write("{:15.6f}".format(DJ[ii][jj] ))
+                    Output_Jac.write("  ")
+                    Output_Jac.write("\n")
+            Output_Jac.write("\n")
+            Output_Jac.write("\n")
 
             DETJ = DJ[0][0] * DJ[1][1] - DJ[1][0] * DJ[0][1]
             FAC  = WStar * DETJ * 0.5
@@ -332,7 +356,7 @@ class Mass_Matrix_Class:
 # -Phi_Phi_T[NNode][NNode] (float64)  A matrix holding N.N^T
 #
 ####################################################################################################
-    def Mass_2D_8N_def(self,
+    def Mass_2D_8N_def(self, Output_Jac,
                    IEl, NNode, NDim, NInt, NEqEl,            #  Integer Variables
                    Rho, Lambda, Mu,                          #  Real Variables
                    XT, ME, M_Sum, KE,                        #  Real Arrays
@@ -379,7 +403,20 @@ class Mass_Matrix_Class:
 
                 DJ   = self.matrixmult_def(XT, DFXI)
 
-                print(DJ)
+                Output_Jac.write(" The Jac matrix of element number: ")
+                Output_Jac.write(str(IEl))
+                Output_Jac.write("- at the Integration point: ")
+                Output_Jac.write(str(LX))
+                Output_Jac.write("and: ")
+                Output_Jac.write(str(LY))
+                Output_Jac.write("\n")
+                for ii in range(2):
+                    for jj in range(2):
+                        Output_Jac.write("{:15.6f}".format(DJ[ii][jj] ))
+                        Output_Jac.write("  ")
+                        Output_Jac.write("\n")
+                Output_Jac.write("\n")
+                Output_Jac.write("\n")
 
                 DETJ = DJ[0][0] * DJ[1][1] - DJ[1][0] * DJ[0][1]
                 FAC  = WSTAR * DETJ
@@ -456,7 +493,7 @@ class Mass_Matrix_Class:
 #
 ####################################################################################################
 
-    def Mass_2D_6N_def(self,
+    def Mass_2D_6N_def(self, Output_Jac,
             IEl, NNode, NDim, NInt,  NEqEl,    # Integer Variables
             Rho,  Lambda, Mu,                  # Real Variables
             XT, ME, M_Sum, KE,                 # Real Arrays
@@ -498,7 +535,18 @@ class Mass_Matrix_Class:
 
             DJ   = self.matrixmult_def(XT, DFXI)
 
-            print(DJ)
+            Output_Jac.write(" The Jac matrix of element number: ")
+            Output_Jac.write(str(IEl))
+            Output_Jac.write("- at the Integration point: ")
+            Output_Jac.write(str(ll))
+            Output_Jac.write("\n")
+            for ii in range(2):
+                for jj in range(2):
+                    Output_Jac.write("{:15.6f}".format(DJ[ii][jj] ))
+                    Output_Jac.write("  ")
+                    Output_Jac.write("\n")
+            Output_Jac.write("\n")
+            Output_Jac.write("\n")
 
             DETJ = DJ[0][0] * DJ[1][1] - DJ[1][0] * DJ[0][1]
             FAC  = WStar * DETJ * 0.5
