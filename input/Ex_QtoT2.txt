@@ -3,11 +3,11 @@
 1          ! NEl: Total Number of Elements
 3          ! El_Type: The Element type, 1: for first-order quad - 2: for first-order triangle- 3: for second-order quad - 2: for second-order triangle
 1          ! NInt_Type: Type of integration point 1: for quad - 2: for triangle
-5          ! NInt
+3          ! NInt
 2          ! NDim
 8          ! NNode
-8          ! Total number of nodes
+6          ! Total number of nodes
 1.0        ! Density
-1000.0        ! Lambda
-1000.0        ! Mu
+1.0        ! Lambda
+1.0        ! Mu
 2          ! NDOF: Degrees of freedom of each node

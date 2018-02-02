@@ -219,7 +219,7 @@ class Compute_Class:
       Output.write("\n")
       for ii in range(NEqEl):
         for jj in range(NEqEl):
-          Output.write("{:9.6f}".format(self.ME[ii][jj] ))
+          Output.write("{:15.6f}".format(self.ME[ii][jj] ))
           Output.write("  ")
         Output.write("\n")
       Output.write("\n")
@@ -231,7 +231,7 @@ class Compute_Class:
       Output.write("\n")
       for ii in range(NEqEl):
         for jj in range(NEqEl):
-          Output.write("{:9.6f}".format(self.KE[ii][jj] ))
+          Output.write("{:15.6f}".format(self.KE[ii][jj] ))
           Output.write("  ")
         Output.write("\n")
       Output.write("\n")
@@ -239,12 +239,13 @@ class Compute_Class:
 
       # Form the ND array for assembling - This array indicates how to assemble the element 
       # matrix in the global matrix
-      for ii in range(Input.NNode):
-        for jj in range(Input.NDOF):
-          self.ND[(jj-1) * Input.NNode + ii ] = self.ID[self.Conn[ii][IEl]][jj]
+      for ii in range(Input.NDOF):
+        for jj in range(Input.NNode):
+          self.ND[ii * Input.NNode + jj ] = self.ID[self.Conn[jj][IEl]][ii]
 
-      print("ND: ", self.ND)
-      print("ID: ", self.ID)
+      #print("Conn: ", self.Conn)
+      #print("ND: ", self.ND)
+      #print("ID: ", self.ID)
 
       # Assemgble the local mass matrix in the global mass matrix
       self.Assemble(                
@@ -260,7 +261,7 @@ class Compute_Class:
     Output.write("\n")
     for ii in range(Input.NEq):
       for jj in range(Input.NEq):
-        Output.write("{:9.6f}".format(self.M_Global[ii][jj] ))
+        Output.write("{0:>16.4f}".format(self.M_Global[ii][jj] ))
         Output.write("  ")
       Output.write("\n")
     Output.write("\n")
@@ -271,7 +272,7 @@ class Compute_Class:
     Output.write("\n")
     for ii in range(Input.NEq):
       for jj in range(Input.NEq):
-        Output.write("{:9.6f}".format(self.K_Global[ii][jj] ))
+        Output.write("{0: >#016.4f}".format(self.K_Global[ii][jj] ))
         Output.write("  ")
       Output.write("\n")
     Output.write("\n")

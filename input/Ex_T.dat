@@ -1,0 +1,14 @@
+Coordinates
+1 0.0 0.0
+2 1.0 0.0
+3 0.0 1.0
+Connectivity
+NEl  Node numbers
+1    1 2 3 
+Constraints
+NNode   Constraints
+1       0 0
+2       0 0
+3       0 0
+
+

@@ -104,6 +104,7 @@ class Mass_Matrix_Class:
 
         # Import built-in libraries ================================================================
         import numpy as np
+        import sys
 
         # Import user-defined modules ==============================================================
         import Parameters_Class
@@ -141,12 +142,15 @@ class Mass_Matrix_Class:
 
                 DJ   = self.matrixmult_def(XT, DFXI)
 
+                print(DJ)
+
                 DETJ = DJ[0][0] * DJ[1][1] - DJ[1][0] * DJ[0][1]
                 FAC  = WSTAR * DETJ
 
+                print("Det Jacobian: ", DETJ)
                 if DETJ <= 0.0:
-                    print("{} {:d} {} {:d}".format(" Fatal error: The Jacobian for element ", IEl, " is negative: ", DETJ))
-
+                    print("{:} {:d} {:} {:f}".format(" Fatal error: The Jacobian for element ", IEl, " is negative: ", DETJ))
+                    sys.exit(" Simulation terminated")
                 # Calculating the Jacobian Inverse
                 DJI[0][0] =   DJ[1][1]
                 DJI[1][1] =   DJ[0][0]
@@ -173,10 +177,10 @@ class Mass_Matrix_Class:
 
                 for INode in range(NNode):
                     for JNode in range(NNode):
-                        KE[INode][JNode]               =  ( Lambda + 2 * Mu ) * PhiX_PhiX_T[INode][JNode] + Mu * PhiY_PhiY_T[INode][JNode]
-                        KE[NNode+INode][NNode + JNode] =  ( Lambda + 2 * Mu ) * PhiY_PhiY_T[INode][JNode] + Mu * PhiX_PhiX_T[INode][JNode]
-                        KE[INode][NNode + JNode]       =    Lambda            * PhiX_PhiY_T[INode][JNode] + Mu * PhiY_PhiX_T[INode][JNode] 
-                        KE[NNode + INode][JNode]       =    Lambda            * PhiY_PhiX_T[INode][JNode] + Mu * PhiX_PhiY_T[INode][JNode]
+                        KE[INode][JNode]               +=  ( Lambda + 2 * Mu ) * PhiX_PhiX_T[INode][JNode] + Mu * PhiY_PhiY_T[INode][JNode]
+                        KE[NNode+INode][NNode + JNode] +=  ( Lambda + 2 * Mu ) * PhiY_PhiY_T[INode][JNode] + Mu * PhiX_PhiX_T[INode][JNode]
+                        KE[INode][NNode + JNode]       +=    Lambda            * PhiX_PhiY_T[INode][JNode] + Mu * PhiY_PhiX_T[INode][JNode] 
+                        KE[NNode + INode][JNode]       +=    Lambda            * PhiY_PhiX_T[INode][JNode] + Mu * PhiX_PhiY_T[INode][JNode]
 
         # Finding the sum of the entries
         for INode in range(NEqEl):
@@ -221,6 +225,7 @@ class Mass_Matrix_Class:
 
         # Import built-in libraries ================================================================
         import numpy as np
+        import sys
 
         # Import user-defined modules ==============================================================
         import Parameters_Class
@@ -253,11 +258,14 @@ class Mass_Matrix_Class:
 
             DJ   = self.matrixmult_def(XT, DFXI)
 
+            print(DJ)
+
             DETJ = DJ[0][0] * DJ[1][1] - DJ[1][0] * DJ[0][1]
             FAC  = WStar * DETJ * 0.5
 
             if DETJ <= 0.0:
-              print("{} {:d} {} {:d}".format(" Fatal error: The Jacobian for element ", IEl, " is negative: ", DETJ))
+              print("{:} {:d} {:} {:f}".format(" Fatal error: The Jacobian for element ", IEl, " is negative: ", DETJ))
+              sys.exit(" Simulation terminated")
 
             # Calculating the Jacobian Inverse
             DJI[0][0] =   DJ[1][1]
@@ -285,10 +293,10 @@ class Mass_Matrix_Class:
 
             for INode in range(NNode):
                 for JNode in range(NNode):
-                    KE[INode][JNode]               =  ( Lambda + 2 * Mu ) * PhiX_PhiX_T[INode][JNode] + Mu * PhiY_PhiY_T[INode][JNode]
-                    KE[NNode+INode][NNode + JNode] =  ( Lambda + 2 * Mu ) * PhiY_PhiY_T[INode][JNode] + Mu * PhiX_PhiX_T[INode][JNode]
-                    KE[INode][NNode + JNode]       =    Lambda            * PhiX_PhiY_T[INode][JNode] + Mu * PhiY_PhiX_T[INode][JNode] 
-                    KE[NNode + INode][JNode]       =    Lambda            * PhiY_PhiX_T[INode][JNode] + Mu * PhiX_PhiY_T[INode][JNode]
+                    KE[INode][JNode]               +=  ( Lambda + 2 * Mu ) * PhiX_PhiX_T[INode][JNode] + Mu * PhiY_PhiY_T[INode][JNode]
+                    KE[NNode+INode][NNode + JNode] +=  ( Lambda + 2 * Mu ) * PhiY_PhiY_T[INode][JNode] + Mu * PhiX_PhiX_T[INode][JNode]
+                    KE[INode][NNode + JNode]       +=    Lambda            * PhiX_PhiY_T[INode][JNode] + Mu * PhiY_PhiX_T[INode][JNode] 
+                    KE[NNode + INode][JNode]       +=    Lambda            * PhiY_PhiX_T[INode][JNode] + Mu * PhiX_PhiY_T[INode][JNode]
 
         # Finding the sum of the entries
         for INode in range(NEqEl):
@@ -333,6 +341,7 @@ class Mass_Matrix_Class:
 
         # Import built-in libraries ================================================================
         import numpy as np
+        import sys
 
         # Import user-defined modules ==============================================================
         import Parameters_Class
@@ -370,11 +379,14 @@ class Mass_Matrix_Class:
 
                 DJ   = self.matrixmult_def(XT, DFXI)
 
+                print(DJ)
+
                 DETJ = DJ[0][0] * DJ[1][1] - DJ[1][0] * DJ[0][1]
                 FAC  = WSTAR * DETJ
 
                 if DETJ <= 0.0:
-                    print("{} {:d} {} {:d}".format(" Fatal error: The Jacobian for element ", IEl, " is negative: ", DETJ))
+                    print("{:} {:d} {:} {:f}".format(" Fatal error: The Jacobian for element ", IEl, " is negative: ", DETJ))
+                    sys.exit(" Simulation terminated")
 
                 # Calculating the Jacobian Inverse
                 DJI[0][0] =   DJ[1][1]
@@ -385,10 +397,10 @@ class Mass_Matrix_Class:
                 DJI = DJI  / DETJ 
 
                 DFX = self.matrixmult_def(DFXI,DJI) 
-                print("FN:", FN)
+                #print("FN:", FN)
                 for I in range(NNode):
                     for J in range(NNode):
-                        Phi_Phi_T[I][J] = FN[I] * FN[J] * FAC
+                        Phi_Phi_T[I][J]   = FN[I] * FN[J] * FAC
                         PhiX_PhiX_T[I][J] = DFX[I][0] * DFX[J][0] * FAC
                         PhiY_PhiY_T[I][J] = DFX[I][1] * DFX[J][1] * FAC
                         PhiX_PhiY_T[I][J] = DFX[I][0] * DFX[J][1] * FAC
@@ -402,10 +414,10 @@ class Mass_Matrix_Class:
 
                 for INode in range(NNode):
                     for JNode in range(NNode):
-                        KE[INode][JNode]               =  ( Lambda + 2 * Mu ) * PhiX_PhiX_T[INode][JNode] + Mu * PhiY_PhiY_T[INode][JNode]
-                        KE[NNode+INode][NNode + JNode] =  ( Lambda + 2 * Mu ) * PhiY_PhiY_T[INode][JNode] + Mu * PhiX_PhiX_T[INode][JNode]
-                        KE[INode][NNode + JNode]       =    Lambda            * PhiX_PhiY_T[INode][JNode] + Mu * PhiY_PhiX_T[INode][JNode] 
-                        KE[NNode + INode][JNode]       =    Lambda            * PhiY_PhiX_T[INode][JNode] + Mu * PhiX_PhiY_T[INode][JNode]
+                        KE[INode][JNode]               +=  ( Lambda + 2 * Mu ) * PhiX_PhiX_T[INode][JNode] + Mu * PhiY_PhiY_T[INode][JNode]
+                        KE[NNode+INode][NNode + JNode] +=  ( Lambda + 2 * Mu ) * PhiY_PhiY_T[INode][JNode] + Mu * PhiX_PhiX_T[INode][JNode]
+                        KE[INode][NNode + JNode]       +=    Lambda            * PhiX_PhiY_T[INode][JNode] + Mu * PhiY_PhiX_T[INode][JNode] 
+                        KE[NNode + INode][JNode]       +=    Lambda            * PhiY_PhiX_T[INode][JNode] + Mu * PhiX_PhiY_T[INode][JNode]
 
 
         # Finding the sum of the entries
@@ -453,6 +465,7 @@ class Mass_Matrix_Class:
 
         # Import built-in libraries ================================================================
         import numpy as np
+        import sys
 
         # Import user-defined modules ==============================================================
         import Parameters_Class
@@ -463,7 +476,7 @@ class Mass_Matrix_Class:
         DFX       = np.zeros((NNode, NDim),  dtype=np.float64)  # Jacobian matrix in the global coordinates
         DFXI      = np.zeros((NNode, NDim),  dtype=np.float64)  # Jacobian matrix in the global coordinates
         FN        = np.zeros(NNode, dtype=np.float64)           # Shape function array
-        Phi_Phi_T = np.zeros((NNode, NNode), dtype=np.float64)  # Shape functions multiplications
+        Phi_Phi_T = np.zeros((NNode, NNode), dtype=np.float64)  # Shasys.exit(" Simulation terminated")pe functions multiplications
         PhiX_PhiX_T = np.zeros((NNode, NNode), dtype=np.float64)# 
         PhiX_PhiY_T = np.zeros((NNode, NNode), dtype=np.float64)# 
         PhiY_PhiX_T = np.zeros((NNode, NNode), dtype=np.float64)# 
@@ -485,11 +498,14 @@ class Mass_Matrix_Class:
 
             DJ   = self.matrixmult_def(XT, DFXI)
 
+            print(DJ)
+
             DETJ = DJ[0][0] * DJ[1][1] - DJ[1][0] * DJ[0][1]
             FAC  = WStar * DETJ * 0.5
 
             if DETJ <= 0.0:
-              print("{} {:d} {} {:d}".format(" Fatal error: The Jacobian for element ", IEl, " is negative: ", DETJ))
+              print("{:} {:d} {:} {:f}".format(" Fatal error: The Jacobian for element ", IEl, " is negative: ", DETJ))
+              sys.exit(" Simulation terminated")
 
             # Calculating the Jacobian Inverse
             DJI[0][0] =   DJ[1][1]
@@ -517,10 +533,10 @@ class Mass_Matrix_Class:
 
             for INode in range(NNode):
                 for JNode in range(NNode):
-                    KE[INode][JNode]               =  ( Lambda + 2 * Mu ) * PhiX_PhiX_T[INode][JNode] + Mu * PhiY_PhiY_T[INode][JNode]
-                    KE[NNode+INode][NNode + JNode] =  ( Lambda + 2 * Mu ) * PhiY_PhiY_T[INode][JNode] + Mu * PhiX_PhiX_T[INode][JNode]
-                    KE[INode][NNode + JNode]       =    Lambda            * PhiX_PhiY_T[INode][JNode] + Mu * PhiY_PhiX_T[INode][JNode] 
-                    KE[NNode + INode][JNode]       =    Lambda            * PhiY_PhiX_T[INode][JNode] + Mu * PhiX_PhiY_T[INode][JNode]
+                    KE[INode][JNode]               +=  ( Lambda + 2 * Mu ) * PhiX_PhiX_T[INode][JNode] + Mu * PhiY_PhiY_T[INode][JNode]
+                    KE[NNode+INode][NNode + JNode] +=  ( Lambda + 2 * Mu ) * PhiY_PhiY_T[INode][JNode] + Mu * PhiX_PhiX_T[INode][JNode]
+                    KE[INode][NNode + JNode]       +=    Lambda            * PhiX_PhiY_T[INode][JNode] + Mu * PhiY_PhiX_T[INode][JNode] 
+                    KE[NNode + INode][JNode]       +=    Lambda            * PhiY_PhiX_T[INode][JNode] + Mu * PhiX_PhiY_T[INode][JNode]
 
         # Finding the sum of the entries
         for INode in range(NEqEl):

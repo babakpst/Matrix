@@ -1,0 +1,13 @@
+! The Input file for the following example: 4 adjacent quads
+!
+8          ! NEl: Total Number of Elements
+2          ! El_Type: The Element type, 1: for first-order quad - 2: for first-order triangle- 3: for second-order quad - 2: for second-order triangle
+2          ! NInt_Type: Type of integration point 1: for quad - 2: for triangle
+3          ! NInt
+2          ! NDim
+3          ! NNode
+9          ! Total number of nodes
+1.0        ! Density
+1.0        ! Lambda
+1.0        ! Mu
+2          ! NDOF: Degrees of freedom of each node
