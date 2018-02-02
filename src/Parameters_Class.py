@@ -12,6 +12,7 @@
 # V0.0: 01/22/2018 - Class initiation.
 # V0.1: 01/29/2018 - Function compiled successfully for the first time.
 # V0.2: 01/31/2018 - General modifications
+# V0.2: 02/02/2018 - Adding spectral nodes
 #
 # File version $Id
 #
