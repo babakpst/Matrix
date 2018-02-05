@@ -37,6 +37,7 @@ class Parameters_Class:
 
         # Import built-in libraries ====================================================================
         import math
+        import sys
 
         # Import user-defined modules ==================================================================
 
