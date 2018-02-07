@@ -1,4 +1,4 @@
-! The Input file for the following example
+! The Input file for the following example:
 !
 1          ! NEl: Total Number of Elements
 1          ! El_Type: The Element type, 1: for first-order quad - 2: for first-order triangle- 3: for second-order quad - 2: for second-order triangle

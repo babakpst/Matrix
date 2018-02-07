@@ -110,9 +110,8 @@ class Compute_Class:
     # Import built-in libraries ================================================================
     import numpy as np
     import os
-    import shutil
-    import csv
-
+    #import shutil
+    
     # Import user-defined modules ==============================================================
     import Input_Class
     import Parameters_Class
@@ -167,7 +166,7 @@ class Compute_Class:
     Output = open(Output_File,'w')
 
     Output_File_Jacobian = os.path.join(Input.Output_Dir,("Jac_"+Input.Model)) 
-    Output_Jac = open(Output_File,'w')
+    Output_Jac = open(Output_File_Jacobian,'w')
 
     # Loop over the elements to find the element matrix
     for IEl in range(Input.NEl):

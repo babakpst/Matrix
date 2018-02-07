@@ -11,7 +11,7 @@
 # ================================ V E R S I O N ===================================================
 # V0.0: 01/22/2018 - Class initiation.
 # V0.1: 01/29/2018 - Function compiled successfully for the first time.
-# V0.2: 01/31/2018 - General modifications
+# V0.2: 01/31/2018 - General modifications - debugging
 #
 # File version $Id
 #
@@ -35,7 +35,7 @@ def main(arg):
     import Compute_Class
 
 
-    # Code begins =====================================================================================
+    # Code begins ==================================================================================
     print()
     print("{:^80}".format("----------------------- Mass matrix comparison -----------------------"))
     print("{:^80}".format("---------- Developers:: Babak Poursartip/Clint Dawson ----------------"))
